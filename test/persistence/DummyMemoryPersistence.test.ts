@@ -1,5 +1,4 @@
 import { ConfigParams } from 'pip-services-commons-node';
-import { Dummy } from '../Dummy';
 import { DummyPersistenceFixture } from '../DummyPersistenceFixture';
 import { DummyMemoryPersistence } from './DummyMemoryPersistence';
 

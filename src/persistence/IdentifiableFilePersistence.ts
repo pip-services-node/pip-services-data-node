@@ -1,14 +1,14 @@
+import { IIdentifiable } from 'pip-services-commons-node';
 import { ConfigParams } from 'pip-services-commons-node';
-import { IConfigurable } from 'pip-services-commons-node';
 
+import { IdentifiableMemoryPersistence } from './IdentifiableMemoryPersistence';
 import { JsonFilePersister } from './JsonFilePersister'
-import { MemoryPersistence } from '../memory/MemoryPersistence';
 
-export class FilePersistence<T> extends MemoryPersistence<T> implements IConfigurable {
+export class IdentifiableFilePersistence<T extends IIdentifiable<K>, K> extends IdentifiableMemoryPersistence<T, K> {
     protected readonly _persister: JsonFilePersister<T>;
 
     public constructor(persister?: JsonFilePersister<T>) {
-        if (persister == null)
+        if (persister == null) 
             persister = new JsonFilePersister<T>();
 
         super(persister, persister);
@@ -17,6 +17,7 @@ export class FilePersistence<T> extends MemoryPersistence<T> implements IConfigu
     }
 
     public configure(config: ConfigParams): void {
+        super.configure(config);
         this._persister.configure(config);
     }
 

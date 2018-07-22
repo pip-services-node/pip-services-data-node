@@ -3,8 +3,10 @@
 This framework is a part of [Pip.Services](https://github.com/pip-services/pip-services) project.
 It provides implementation of reusable data processing and persistence components:
 
-- **Memory** - in-memory persistence
-- **File** - file persistence
+- MemoryPersistence
+- IdentifiableMemoryPersistence
+- FilePersistence
+- IdentifiableFilePersistence
 
 Quick Links:
 

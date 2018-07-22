@@ -1,10 +1,7 @@
 import { ConfigParams } from 'pip-services-commons-node';
-import { FilterParams } from 'pip-services-commons-node';
-import { PagingParams } from 'pip-services-commons-node';
-import { DataPage } from 'pip-services-commons-node';
 
-import { JsonFilePersister } from '../../src/file/JsonFilePersister';
-import { DummyMemoryPersistence } from '../memory/DummyMemoryPersistence';
+import { JsonFilePersister } from '../../src/persistence/JsonFilePersister';
+import { DummyMemoryPersistence } from './DummyMemoryPersistence';
 import { Dummy } from '../Dummy';
 
 export class DummyFilePersistence extends DummyMemoryPersistence {

@@ -1,12 +1,11 @@
 let assert = require('chai').assert;
 
-import { JsonFilePersister } from '../../src/file/JsonFilePersister';
+import { JsonFilePersister } from '../../src/persistence/JsonFilePersister';
 import { Dummy } from '../Dummy';
 import { ConfigParams } from 'pip-services-commons-node';
 import { ConfigException } from 'pip-services-commons-node';
 
 suite('JsonFilePersister', ()=> {
-    
     var _persister: JsonFilePersister<Dummy>;
 
     setup(function() {

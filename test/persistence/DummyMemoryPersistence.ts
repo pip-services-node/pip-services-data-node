@@ -1,9 +1,8 @@
-import { ConfigParams } from 'pip-services-commons-node';
 import { FilterParams } from 'pip-services-commons-node';
 import { PagingParams } from 'pip-services-commons-node';
 import { DataPage } from 'pip-services-commons-node';
 
-import { IdentifiableMemoryPersistence } from '../../src/memory/IdentifiableMemoryPersistence';
+import { IdentifiableMemoryPersistence } from '../../src/persistence/IdentifiableMemoryPersistence';
 import { Dummy } from '../Dummy';
 import { IDummyPersistence } from '../IDummyPersistence';
 
