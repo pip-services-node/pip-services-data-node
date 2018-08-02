@@ -13,7 +13,7 @@ export declare class MemoryPersistence<T> implements IReferenceable, IOpenable, 
     protected _opened: boolean;
     constructor(loader?: ILoader<T>, saver?: ISaver<T>);
     setReferences(references: IReferences): void;
-    isOpened(): boolean;
+    isOpen(): boolean;
     open(correlationId: string, callback?: (err: any) => void): void;
     private load;
     close(correlationId: string, callback?: (err: any) => void): void;

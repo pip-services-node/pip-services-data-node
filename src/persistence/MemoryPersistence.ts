@@ -23,7 +23,7 @@ export class MemoryPersistence<T> implements IReferenceable, IOpenable, ICleanab
         this._logger.setReferences(references);
     }
 
-    public isOpened(): boolean {
+    public isOpen(): boolean {
         return this._opened;
     }
 

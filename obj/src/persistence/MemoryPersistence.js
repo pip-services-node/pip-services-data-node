@@ -12,7 +12,7 @@ class MemoryPersistence {
     setReferences(references) {
         this._logger.setReferences(references);
     }
-    isOpened() {
+    isOpen() {
         return this._opened;
     }
     open(correlationId, callback) {
