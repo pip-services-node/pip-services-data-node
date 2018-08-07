@@ -69,6 +69,9 @@
 		<div class="col-8 col-content">
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Interface for classes that need to set items of type T in their objects.</p>
+					</div>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
@@ -119,19 +122,40 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/ISetter.ts#L3">ISetter.ts:3</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/bb9be01/src/ISetter.ts#L19">ISetter.ts:19</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Abstract method that will contain the logic for setting the given item in the object for
+									which it was called.</p>
+								</div>
+								<p>Items are usually set in the following way:</p>
+								<ul>
+									<li>if no objects exist with the item&#39;s ID, then the item will simply be added.</li>
+									<li>if one does exist, then it will be overwritten by the item that was passed to the method.</li>
+								</ul>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlation_id: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>unique business transaction id to trace calls across components.</p>
+									</div>
 								</li>
 								<li>
 									<h5>item: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the item to set.</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) the function to call with the item that was set
+										(or with an error, if one is raised).</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">

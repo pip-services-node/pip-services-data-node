@@ -18,18 +18,59 @@ import { ISetter } from '../ISetter';
 import { ILoader } from '../ILoader';
 import { ISaver } from '../ISaver';
 
+/**
+ * Stores [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html identifiable]] 
+ * items of type T in memory and provides methods for working with the data that is stored.
+ * 
+ * An IdentifiableMemoryPersistence's max page size can be configured by passing ConfigParams with 
+ * a "options.max_page_size" parameter to this class's [[configure]] method.
+ * 
+ * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html IIdentifiable]] (in the PipServices "Commons" package)
+ */
 export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extends MemoryPersistence<T> 
     implements IConfigurable, IWriter<T, K>, IGetter<T, K>, ISetter<T> {
     protected _maxPageSize: number = 100;
 
+    /**
+     * Creates a new IdentifiableMemoryPersistence.
+     * 
+     * @param loader    the loader to use for loading items from a data source.
+     * @param saver     the saver to use for saving items to a data source.
+     */
     public constructor(loader?: ILoader<T>, saver?: ISaver<T>) {
         super(loader, saver);
     }
 
+    /**
+     * Configures this IdentifiableMemoryPersistence using the parameters provided. Looks 
+     * for a parameter with the key "options.max_page_size" and sets it for this object. 
+     * If the key is not found, the value will default to the value that was previously set 
+     * for this object.
+     * 
+     * @param config    ConfigParams, containing a "options.max_page_size" item.
+     * 
+     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]] (in the PipServices "Commons" Package)
+     */
     public configure(config: ConfigParams): void {
         this._maxPageSize = config.getAsIntegerWithDefault("options.max_page_size", this._maxPageSize);
     }
 
+    /**
+     * Retrieves DataPages from this IdentifiableMemoryPersistence in accordance with the given parameters.
+     * 
+     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param filter            the filter parameters to filter by.
+     * @param paging            the paging parameters to use.
+     * @param sort              the sorting parameters to sort by.
+     * @param select            not used.
+     * @param callback          the function to call with the retrieved pages 
+     *                          (or with an error, if one is raised).
+     * 
+     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.datapage.html DataPage]] (in the PipServices "Commons" package)
+     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.filterparams.html FilterParams]] (in the PipServices "Commons" package)
+     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.pagingparams.html PagingParams]] (in the PipServices "Commons" package)
+     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.sortparams.html SortParams]] (in the PipServices "Commons" package)
+     */
     protected getPageByFilter(correlationId: string, filter: any, 
         paging: PagingParams, sort: any, select: any, 
         callback: (err: any, page: DataPage<T>) => void): void {
@@ -61,6 +102,19 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
         callback(null, page);
     }
 
+    /**
+     * Retrieves a list of items in accordance with the given parameters.
+     * 
+     * @param correlationId    unique business transaction id to trace calls across components.
+     * @param filter            the filter parameters to filter by.
+     * @param sort              the sorting parameters to sort by.
+     * @param select            not used.
+     * @param callback          the function to call with the retrieved list of items 
+     *                          (or with an error, if one is raised).
+     * 
+     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.filterparams.html FilterParams]] (in the PipServices "Commons" package)
+     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.sortparams.html SortParams]] (in the PipServices "Commons" package)
+     */
     protected getListByFilter(correlationId: string, filter: any, sort: any, select: any,
         callback: (err: any, items: T[]) => void): void {
         
@@ -79,6 +133,14 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
         callback(null, items);
     }
 
+    /**
+     * Retrieves the items with the given IDs. 
+     * 
+     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param ids               the ids of the items to retrieve.
+     * @param callback          the function to call with the retrieved list of items 
+     *                          (or with an error, if one is raised).
+     */
     public getListByIds(correlationId: string, ids: K[],
         callback: (err: any, items: T[]) => void): void {
         let filter = (item: T) => {
@@ -87,6 +149,14 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
         this.getListByFilter(correlationId, filter, null, null, callback);
     }
 
+    /**
+     * Retrieves a random item from the ones that are stored. 
+     * 
+     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param filter            the filtering function to filter the result by.
+     * @param callback          the function to call with the randomly retrieved item 
+     *                          (or with an error, if one is raised).
+     */
     protected getOneRandom(correlationId: string, filter: any, callback: (err: any, item: T) => void): void {
         let items = this._items;
 
@@ -104,6 +174,14 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
         callback(null, item);
     }
 
+    /**
+     * Retrieves an item by its ID. 
+     * 
+     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param id                the id of the item to retrieve.
+     * @param callback          the function to call with the retrieved item 
+     *                          (or with an error, if one is raised).
+     */
     public getOneById(correlationId: string, id: K, callback: (err: any, item: T) => void): void {
         let items = this._items.filter((x) => {return x.id == id;});
         let item = items.length > 0 ? items[0] : null;
@@ -116,6 +194,16 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
         callback(null, item);
     }
 
+    /**
+     * Creates a new record of the given item and [[save saves]] it.
+     * 
+     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param item              the item to create a record of.
+     * @param callback          (optional) the function to call with the created record 
+     *                          (or with an error, if one is raised).
+     * 
+     * @see [[save]]
+     */
     public create(correlationId: string, item: T, callback?: (err: any, item: T) => void): void {
         item = _.clone(item);
         if (item.id == null)
@@ -129,6 +217,16 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
         });
     }
 
+    /**
+     * Sets the given item in this IdentifiableMemoryPersistence. If no objects exist with the item's 
+     * ID, then the item will simply be added. If one does exist, then it will be 
+     * overwritten by the item that was passed to this method.
+     * 
+     * @param correlationId    unique business transaction id to trace calls across components.
+     * @param item              the item to set.
+     * @param callback          (optional) the function to call with the item that was set 
+     *                          (or with an error, if one is raised).
+     */
     public set(correlationId: string, item: T, callback?: (err: any, item: T) => void): void {
         item = _.clone(item);
         if (item.id == null)
@@ -146,6 +244,14 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
         });
     }
 
+    /**
+     * Updates the record of the given item.
+     * 
+     * @param correlationId    unique business transaction id to trace calls across components.
+     * @param item              the item to update.
+     * @param callback          (optional) the function to call with the updated item 
+     *                          (or with an error, if one is raised).
+     */
     public update(correlationId: string, item: T, callback?: (err: any, item: T) => void): void {
         let index = this._items.map((x) => { return x.id; }).indexOf(item.id);
 
@@ -164,6 +270,17 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
         });
     }
 
+    /**
+     * Performes a partial update for the record with the given ID.
+     * 
+     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param id                the id of the item that is to be updated (partially).
+     * @param data              the map of items to update in the record.
+     * @param callback          (optional) the function to call with the updated item 
+     *                          (or with an error, if one is raised).
+     * 
+     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.anyvaluemap.html AnyValueMap]]
+     */
     public updatePartially(correlationId: string, id: K, data: AnyValueMap,
         callback?: (err: any, item: T) => void): void {
             
@@ -185,6 +302,14 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
         });
     }
 
+    /**
+     * Deletes the item with the given ID.
+     * 
+     * @param correlationId    unique business transaction id to trace calls across components.
+     * @param id                the id of the item that is to be deleted.
+     * @param callback          (optional) the function to call with the deleted item 
+     *                          (or with an error, if one is raised).
+     */
     public deleteById(correlationId: string, id: K, callback?: (err: any, item: T) => void): void {
         var index = this._items.map((x) => { return x.id; }).indexOf(id);
         var item = this._items[index];
@@ -203,6 +328,13 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
         });
     }
 
+    /**
+     * Deletes items that match the given filter.
+     * 
+     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param filter            the filter function to delete items by.
+     * @param callback          (optional) the function to call with an error (if one is raised).
+     */
     protected deleteByFilter(correlationId: string, filter: any, callback?: (err: any) => void): void {
         let deleted = 0;
         for (let index = this._items.length - 1; index>= 0; index--) {
@@ -225,6 +357,13 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
         });
     }
 
+    /**
+     * Deletes multiple items by their provided IDs.
+     * 
+     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param ids               the ids of the items that are to be deleted.
+     * @param callback          (optional) the function to call with an error (if one is raised).
+     */
     public deleteByIds(correlationId: string, ids: K[], callback?: (err: any) => void): void {
         let filter = (item: T) => {
             return _.indexOf(ids, item.id) >= 0;

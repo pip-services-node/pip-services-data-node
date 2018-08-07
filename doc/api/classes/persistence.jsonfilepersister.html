@@ -67,6 +67,15 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Helper class that provides methods for working with JSON data that is stored in a file.</p>
+					</div>
+					<p>A JsonFilePersister&#39;s path can be configured by passing ConfigParams with
+					a &quot;path&quot; parameter to this class&#39;s <a href="persistence.jsonfilepersister.html#configure">configure</a> method.</p>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-type-parameters">
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
@@ -136,13 +145,23 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/persistence/JsonFilePersister.ts#L16">persistence/JsonFilePersister.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/bb9be01/src/persistence/JsonFilePersister.ts#L22">persistence/JsonFilePersister.ts:22</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a new JsonFilePersister.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> path: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>the path to the target JSON file.</p>
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="persistence.jsonfilepersister.html" class="tsd-signature-type">JsonFilePersister</a></h4>
@@ -158,7 +177,7 @@
 					<div class="tsd-signature tsd-kind-icon">_path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/persistence/JsonFilePersister.ts#L16">persistence/JsonFilePersister.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/bb9be01/src/persistence/JsonFilePersister.ts#L22">persistence/JsonFilePersister.ts:22</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -176,24 +195,35 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/persistence/JsonFilePersister.ts#L22">persistence/JsonFilePersister.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/bb9be01/src/persistence/JsonFilePersister.ts#L36">persistence/JsonFilePersister.ts:36</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>the path to the target JSON file.</p>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/persistence/JsonFilePersister.ts#L26">persistence/JsonFilePersister.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/bb9be01/src/persistence/JsonFilePersister.ts#L43">persistence/JsonFilePersister.ts:43</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>value: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>the path to the target JSON file.</p>
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<p>the path to the target JSON file.</p>
 						</li>
 					</ul>
 				</section>
@@ -210,13 +240,28 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/persistence/JsonFilePersister.ts#L30">persistence/JsonFilePersister.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/bb9be01/src/persistence/JsonFilePersister.ts#L56">persistence/JsonFilePersister.ts:56</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Configures this JsonFilePersister using the parameters provided. Looks for a parameter
+										with the key &quot;path&quot; and sets it for this object. If the key is not found, the value will
+									default to the value that was previously set for this object.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html" class="external">ConfigParams</a> (in the PipServices &quot;Commons&quot; Package)</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>config: <span class="tsd-signature-type">ConfigParams</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>ConfigParams, containing a &quot;path&quot; item.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -233,16 +278,28 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/persistence/JsonFilePersister.ts#L34">persistence/JsonFilePersister.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/bb9be01/src/persistence/JsonFilePersister.ts#L67">persistence/JsonFilePersister.ts:67</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Loads the JSON data that is stored in this JsonFilePersister&#39;s target file.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlation_id: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>unique business transaction id to trace calls across components.</p>
+									</div>
 								</li>
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the function to call with the loaded data
+										(or with an error, if one is raised).</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
@@ -280,19 +337,34 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/persistence/JsonFilePersister.ts#L59">persistence/JsonFilePersister.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/bb9be01/src/persistence/JsonFilePersister.ts#L100">persistence/JsonFilePersister.ts:100</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Saves the given entities as JSON data to this JsonFilePersister&#39;s target file.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlation_id: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>unique business transaction id to trace calls across components.</p>
+									</div>
 								</li>
 								<li>
 									<h5>entities: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the entities to save.</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the function to call once the saving process is complete.
+										Will be called with an error if one is raised.</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">

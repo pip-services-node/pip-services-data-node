@@ -67,6 +67,27 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Stores items of type T in a JSON file and provides methods for working with the data
+						that is stored.</p>
+					</div>
+					<p>A FilePersistence&#39;s target file path can be configured by passing ConfigParams with
+					a &quot;path&quot; parameter to this class&#39;s <a href="persistence.filepersistence.html#configure">configure</a> method.</p>
+					<dl class="tsd-comment-tags">
+						<dt>see</dt>
+						<dd><p><a href="persistence.jsonfilepersister.html">JsonFilePersister</a></p>
+						</dd>
+						<dt>see</dt>
+						<dd><p><a href="persistence.memorypersistence.html">MemoryPersistence</a></p>
+						</dd>
+						<dt>see</dt>
+						<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/config.iconfigurable.html" class="external">IConfigurable</a> (in the PipServices &quot;Commons&quot; package)</p>
+						</dd>
+					</dl>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-type-parameters">
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
@@ -146,13 +167,24 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/persistence/FilePersistence.ts#L9">persistence/FilePersistence.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/bb9be01/src/persistence/FilePersistence.ts#L20">persistence/FilePersistence.ts:20</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a new FilePersistence.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> persister: <a href="persistence.jsonfilepersister.html" class="tsd-signature-type">JsonFilePersister</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>the JsonFilePersister to use for loading and saving
+											JSON data to a file.</p>
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="persistence.filepersistence.html" class="tsd-signature-type">FilePersistence</a></h4>
@@ -169,7 +201,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#_items">_items</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/persistence/MemoryPersistence.ts#L13">persistence/MemoryPersistence.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/bb9be01/src/persistence/MemoryPersistence.ts#L22">persistence/MemoryPersistence.ts:22</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -180,7 +212,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#_loader">_loader</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/persistence/MemoryPersistence.ts#L14">persistence/MemoryPersistence.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/bb9be01/src/persistence/MemoryPersistence.ts#L23">persistence/MemoryPersistence.ts:23</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -191,7 +223,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#_logger">_logger</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/persistence/MemoryPersistence.ts#L12">persistence/MemoryPersistence.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/bb9be01/src/persistence/MemoryPersistence.ts#L21">persistence/MemoryPersistence.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -202,7 +234,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#_opened">_opened</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/persistence/MemoryPersistence.ts#L16">persistence/MemoryPersistence.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/bb9be01/src/persistence/MemoryPersistence.ts#L25">persistence/MemoryPersistence.ts:25</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -212,7 +244,7 @@
 					<div class="tsd-signature tsd-kind-icon">_persister<span class="tsd-signature-symbol">:</span> <a href="persistence.jsonfilepersister.html" class="tsd-signature-type">JsonFilePersister</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/persistence/FilePersistence.ts#L9">persistence/FilePersistence.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/bb9be01/src/persistence/FilePersistence.ts#L20">persistence/FilePersistence.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -223,7 +255,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#_saver">_saver</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/persistence/MemoryPersistence.ts#L15">persistence/MemoryPersistence.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/bb9be01/src/persistence/MemoryPersistence.ts#L24">persistence/MemoryPersistence.ts:24</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -241,16 +273,34 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#clear">clear</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/persistence/MemoryPersistence.ts#L75">persistence/MemoryPersistence.ts:75</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/bb9be01/src/persistence/MemoryPersistence.ts#L134">persistence/MemoryPersistence.ts:134</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Clears this MemoryPersistence by removing all of its items from memory and calling the
+									<a href="persistence.filepersistence.html#save">save</a> method.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="persistence.filepersistence.html#save">save</a></p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>unique business transaction id to trace calls across components.</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) the function to call once the clearing process is complete.
+										Will be called with an error if one is raised.</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
@@ -286,16 +336,28 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#close">close</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/persistence/MemoryPersistence.ts#L53">persistence/MemoryPersistence.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/bb9be01/src/persistence/MemoryPersistence.ts#L95">persistence/MemoryPersistence.ts:95</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Closes this MemoryPersistence by attempting to save its items to memory.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>unique business transaction id to trace calls across components.</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) the function to call once the closing process is complete.
+										Will be called with an error if one is raised.</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
@@ -330,13 +392,30 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/persistence/FilePersistence.ts#L20">persistence/FilePersistence.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/bb9be01/src/persistence/FilePersistence.ts#L46">persistence/FilePersistence.ts:46</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Configures the path to the target file, with which this object&#39;s <a href="persistence.jsonfilepersister.html">JsonFilePersister</a>
+									will be working.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="persistence.jsonfilepersister.html#configure">JsonFilePersister.configure</a></p>
+									</dd>
+									<dt>see</dt>
+									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html" class="external">ConfigParams</a> (in the PipServices &quot;Commons&quot; Package)</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>config: <span class="tsd-signature-type">ConfigParams</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>ConfigParams, containing a &quot;path&quot; item.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -354,10 +433,18 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#isopen">isOpen</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/persistence/MemoryPersistence.ts#L27">persistence/MemoryPersistence.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/bb9be01/src/persistence/MemoryPersistence.ts#L55">persistence/MemoryPersistence.ts:55</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="persistence.filepersistence.html#open">open</a></p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p>whether or not this MemoryPersistence&#39;s items have been loaded to memory.</p>
 						</li>
 					</ul>
 				</section>
@@ -372,16 +459,28 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#open">open</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/persistence/MemoryPersistence.ts#L31">persistence/MemoryPersistence.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/bb9be01/src/persistence/MemoryPersistence.ts#L66">persistence/MemoryPersistence.ts:66</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Opens this MemoryPersistence by attempting to load its items to memory.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>unique business transaction id to trace calls across components.</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) the function to call once the opening process is complete.
+										Will be called with an error if one is raised.</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
@@ -417,16 +516,28 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#save">save</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/persistence/MemoryPersistence.ts#L61">persistence/MemoryPersistence.ts:61</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/bb9be01/src/persistence/MemoryPersistence.ts#L110">persistence/MemoryPersistence.ts:110</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Saves the items stored by this MemoryPersistence to a data source.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>unique business transaction id to trace calls across components.</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) the function to call once the saving process is complete.
+										Will be called with an error if one is raised.</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
@@ -462,13 +573,27 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#setreferences">setReferences</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/persistence/MemoryPersistence.ts#L23">persistence/MemoryPersistence.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/bb9be01/src/persistence/MemoryPersistence.ts#L46">persistence/MemoryPersistence.ts:46</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets this MemoryPersistence&#39;s logger&#39;s references. A logger&#39;s
+									reference is usually its context info.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/log.logger.html#setreferences" class="external">Logger.setReferences</a></p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>references: <span class="tsd-signature-type">IReferences</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the references to set in the logger.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
