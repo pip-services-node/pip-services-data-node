@@ -1,3 +1,5 @@
+/** @module persistence */
+/** @hidden */
 const fs = require('fs');
 
 import { IConfigurable } from 'pip-services-commons-node';

@@ -1,3 +1,4 @@
+/** @module core */
 import { FilterParams } from 'pip-services-commons-node';
 import { SortParams } from 'pip-services-commons-node';
 

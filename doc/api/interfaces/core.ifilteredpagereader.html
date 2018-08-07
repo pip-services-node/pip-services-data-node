@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ISaver | pip-services-data-node</title>
+	<title>IFilteredPageReader | pip-services-data-node</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="isaver.html">ISaver</a>
+					<a href="../modules/core.html">core</a>
+				</li>
+				<li>
+					<a href="core.ifilteredpagereader.html">IFilteredPageReader</a>
 				</li>
 			</ul>
-			<h1>Interface ISaver&lt;T&gt;</h1>
+			<h1>Interface IFilteredPageReader&lt;T&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -76,14 +79,8 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">ISaver</span>
+						<span class="target">IFilteredPageReader</span>
 					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel">
-				<h3>Implemented by</h3>
-				<ul class="tsd-hierarchy">
-					<li><a href="../classes/jsonfilepersister.html" class="tsd-signature-type">JsonFilePersister</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -93,7 +90,7 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="isaver.html#save" class="tsd-kind-icon">save</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="core.ifilteredpagereader.html#getpagebyfilter" class="tsd-kind-icon">get<wbr>Page<wbr>ByFilter</a></li>
 							</ul>
 						</section>
 					</div>
@@ -102,16 +99,16 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="save" class="tsd-anchor"></a>
-					<h3>save</h3>
+					<a name="getpagebyfilter" class="tsd-anchor"></a>
+					<h3>get<wbr>Page<wbr>ByFilter</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">save<span class="tsd-signature-symbol">(</span>correlation_id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, items<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Page<wbr>ByFilter<span class="tsd-signature-symbol">(</span>correlation_id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, filter<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">FilterParams</span>, paging<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PagingParams</span>, sort<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">SortParams</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/a4da4e3/src/ISaver.ts#L2">ISaver.ts:2</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/fdd168c/src/IFilteredPageReader.ts#L8">IFilteredPageReader.ts:8</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -120,21 +117,30 @@
 									<h5>correlation_id: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>items: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>filter: <span class="tsd-signature-type">FilterParams</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
+									<h5>paging: <span class="tsd-signature-type">PagingParams</span></h5>
+								</li>
+								<li>
+									<h5>sort: <span class="tsd-signature-type">SortParams</span></h5>
+								</li>
+								<li>
+									<h5>callback: <span class="tsd-signature-type">function</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, page<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DataPage</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
 													<h4 class="tsd-parameters-title">Parameters</h4>
 													<ul class="tsd-parameters">
 														<li>
-															<h5><span class="tsd-flag ts-flagOptional">Optional</span> err: <span class="tsd-signature-type">any</span></h5>
+															<h5>err: <span class="tsd-signature-type">any</span></h5>
+														</li>
+														<li>
+															<h5>page: <span class="tsd-signature-type">DataPage</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -156,69 +162,54 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
+					<li class="current tsd-kind-external-module">
+						<a href="../modules/core.html">core</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/persistence.html">persistence</a>
+					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="../classes/filepersistence.html" class="tsd-kind-icon">File<wbr>Persistence</a>
-					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="../classes/identifiablefilepersistence.html" class="tsd-kind-icon">Identifiable<wbr>File<wbr>Persistence</a>
-					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="../classes/identifiablememorypersistence.html" class="tsd-kind-icon">Identifiable<wbr>Memory<wbr>Persistence</a>
-					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="../classes/jsonfilepersister.html" class="tsd-kind-icon">Json<wbr>File<wbr>Persister</a>
-					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="../classes/memorypersistence.html" class="tsd-kind-icon">Memory<wbr>Persistence</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="ifilteredpagereader.html" class="tsd-kind-icon">IFiltered<wbr>Page<wbr>Reader</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="ifilteredreader.html" class="tsd-kind-icon">IFiltered<wbr>Reader</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="igetter.html" class="tsd-kind-icon">IGetter</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="iloader.html" class="tsd-kind-icon">ILoader</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="ipartialupdater.html" class="tsd-kind-icon">IPartial<wbr>Updater</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="iquerablepagereader.html" class="tsd-kind-icon">IQuerable<wbr>Page<wbr>Reader</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="iquerablereader.html" class="tsd-kind-icon">IQuerable<wbr>Reader</a>
-					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-has-type-parameter">
-						<a href="isaver.html" class="tsd-kind-icon">ISaver</a>
+					<li class="current tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="core.ifilteredpagereader.html" class="tsd-kind-icon">IFiltered<wbr>Page<wbr>Reader</a>
 						<ul>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="isaver.html#save" class="tsd-kind-icon">save</a>
+								<a href="core.ifilteredpagereader.html#getpagebyfilter" class="tsd-kind-icon">get<wbr>Page<wbr>ByFilter</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="isetter.html" class="tsd-kind-icon">ISetter</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="core.ifilteredreader.html" class="tsd-kind-icon">IFiltered<wbr>Reader</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="iwriter.html" class="tsd-kind-icon">IWriter</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="core.igetter.html" class="tsd-kind-icon">IGetter</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#_" class="tsd-kind-icon">_</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="core.iloader.html" class="tsd-kind-icon">ILoader</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#fs" class="tsd-kind-icon">fs</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="core.ipartialupdater.html" class="tsd-kind-icon">IPartial<wbr>Updater</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="core.iquerablepagereader.html" class="tsd-kind-icon">IQuerable<wbr>Page<wbr>Reader</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="core.iquerablereader.html" class="tsd-kind-icon">IQuerable<wbr>Reader</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="core.isaver.html" class="tsd-kind-icon">ISaver</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="core.isetter.html" class="tsd-kind-icon">ISetter</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="core.iwriter.html" class="tsd-kind-icon">IWriter</a>
 					</li>
 				</ul>
 			</nav>

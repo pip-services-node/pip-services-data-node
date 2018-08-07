@@ -1,3 +1,5 @@
+/** @module persistence */
+/** @hidden */
 let _ = require('lodash');
 
 import { IIdentifiable } from 'pip-services-commons-node';

@@ -1,3 +1,8 @@
+/** 
+ * @module core 
+ * @preferred
+ * Contains interfaces for various design patterns that work with data.
+ */
 export { IPartialUpdater } from './IPartialUpdater';
 export { IFilteredPageReader } from './IFilteredPageReader';
 export { IFilteredReader } from './IFilteredReader';

@@ -1,3 +1,4 @@
+/** @module core */
 import { AnyValueMap } from 'pip-services-commons-node';
 
 export interface IWriter<T, K> {

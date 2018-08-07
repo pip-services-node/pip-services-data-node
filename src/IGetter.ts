@@ -1,3 +1,4 @@
+/** @module core */
 import { IIdentifiable } from 'pip-services-commons-node';
 
 export interface IGetter<T extends IIdentifiable<K>, K> {

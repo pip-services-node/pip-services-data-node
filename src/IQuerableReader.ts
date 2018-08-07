@@ -1,3 +1,4 @@
+/** @module core */
 import { SortParams } from 'pip-services-commons-node';
 
 export interface IQuerableReader<T> {
