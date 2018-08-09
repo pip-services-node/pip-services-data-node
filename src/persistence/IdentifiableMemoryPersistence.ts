@@ -19,8 +19,9 @@ import { ILoader } from '../ILoader';
 import { ISaver } from '../ISaver';
 
 /**
- * Stores [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html identifiable]] 
- * items of type T in memory and provides methods for working with the data that is stored.
+ * Stores items of type T in memory, 
+ * [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html identifiable]] 
+ * by their keys of type K, and provides methods for working with the items stored.
  * 
  * An IdentifiableMemoryPersistence's max page size can be configured by passing ConfigParams with 
  * a "options.max_page_size" parameter to this class's [[configure]] method.
