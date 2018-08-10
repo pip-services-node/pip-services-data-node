@@ -36,12 +36,13 @@ export class MemoryPersistence<T> implements IReferenceable, IOpenable, ICleanab
     }
 
     /**
-     * Sets this MemoryPersistence's logger's references. A logger's
-     * reference is usually its context info.
+     * Sets the source of this object's logger using the context-info reference that is 
+     * passed to this method.
      * 
-     * @param references    the references to set in the logger.
+     * @param references    an IReferences object, containing the "context-info" reference to set.
      * 
-     * @see [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/log.logger.html#setreferences Logger.setReferences]]
+     * @see [[ContextInfo]]
+     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/refer.ireferences.html IReferences]] (in the PipServices "Commons" package)
      */
     public setReferences(references: IReferences): void {
         this._logger.setReferences(references);

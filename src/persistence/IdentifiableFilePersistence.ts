@@ -46,7 +46,7 @@ export class IdentifiableFilePersistence<T extends IIdentifiable<K>, K> extends 
      * 
      * @see [[JsonFilePersister.configure]]
      * @see [[IdentifiableMemoryPersistence.configure]]
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]] (in the PipServices "Commons" Package)
+     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]] (in the PipServices "Commons" package)
      */
     public configure(config: ConfigParams): void {
         super.configure(config);

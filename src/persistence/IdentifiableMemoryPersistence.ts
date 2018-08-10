@@ -50,7 +50,7 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
      * 
      * @param config    ConfigParams, containing a "options.max_page_size" item.
      * 
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]] (in the PipServices "Commons" Package)
+     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]] (in the PipServices "Commons" package)
      */
     public configure(config: ConfigParams): void {
         this._maxPageSize = config.getAsIntegerWithDefault("options.max_page_size", this._maxPageSize);

@@ -51,7 +51,7 @@ export class JsonFilePersister<T> implements ILoader<T>, ISaver<T>, IConfigurabl
      * 
      * @param config    ConfigParams, containing a "path" item.
      * 
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]] (in the PipServices "Commons" Package)
+     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]] (in the PipServices "Commons" package)
      */
     public configure(config: ConfigParams): void {
         this._path = config.getAsStringWithDefault("path", this._path);
