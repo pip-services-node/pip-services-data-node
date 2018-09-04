@@ -3,6 +3,14 @@
  * Interface for classes that need to load items of type T from a data source.
  * 
  * @see [[ISaver]]
+ * 
+ * ### Examples ###
+ * 
+ *     export class MyLoader<T> implements ILoader<T> {
+ *         public load(correlation_id: string, callback: (err: any, items: T[]) => void): void {
+ *             ...
+ *         }
+ *     }
  */
 export interface ILoader<T> {
     /**

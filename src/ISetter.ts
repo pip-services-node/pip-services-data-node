@@ -1,6 +1,14 @@
 /** @module core */
 /**
  * Interface for classes that need to set items of type T in their objects.
+ * 
+ * ### Examples ###
+ * 
+ *     export class MySetter<T> implements ISetter<T> {
+ *         public set(correlation_id: string, item: T, callback?: (err: any, item: T) => void): void {
+ *             ...
+ *         }
+ *     }
  */
 export interface ISetter<T> {
     /**

@@ -8,6 +8,14 @@ import { IIdentifiable } from 'pip-services-commons-node';
  * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html IIdentifiable]]
  * 
  * @see [IWriter] (for a complete set of CRUD operations)
+ * 
+ * ### Examples ###
+ * 
+ *     export class MyGetter<T> implements IGetter<T> {
+ *         public getOneById(correlation_id: string, id: K, callback: (err: any, item: T) => void): void {
+ *             ...
+ *         }
+ *     }
  */
 export interface IGetter<T extends IIdentifiable<K>, K> {
     /**

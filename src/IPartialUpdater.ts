@@ -7,6 +7,14 @@ import { AnyValueMap } from 'pip-services-commons-node';
  * records of the type T, whose IDs are of type K.
  * 
  * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html IIdentifiable]]
+ * 
+ * ### Examples ###
+ * 
+ *     export class MyPartialUpdater<T> implements IPartialUpdater<T, K> {
+ *         public updatePartially(correlation_id: string, id: K, data: AnyValueMap, callback?: (err: any, item: T) => void): void {
+ *             ...
+ *         }
+ *     }
  */
 export interface IPartialUpdater<T, K> {
     /**

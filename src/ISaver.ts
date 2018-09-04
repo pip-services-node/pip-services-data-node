@@ -3,6 +3,14 @@
  * Interface for classes that need to save items of type T to a data source. 
  * 
  * @see [[ILoader]]
+ * 
+ * ### Examples ###
+ * 
+ *     export class MySaver<T> implements ISaver<T> {
+ *         public save(correlation_id: string, items: T[], callback?: (err?: any) => void): void {
+ *             ...
+ *         }
+ *     }
  */
 export interface ISaver<T> {
     /**

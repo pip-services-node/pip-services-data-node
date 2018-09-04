@@ -3,6 +3,14 @@ import { SortParams } from 'pip-services-commons-node';
 
 /**
  * Interface for retrieving a list of items from a data source using a query.
+ * 
+ * ### Examples ###
+ * 
+ *     export class MyQuerableReader<T> implements IQuerableReader<T> {
+ *         public getListByQuery(correlation_id: string, query: string, sort: SortParams, callback: (err: any, items: T[]) => void): void {
+ *             ...
+ *         }
+ *     }
  */
 export interface IQuerableReader<T> {
     /**

@@ -27,6 +27,23 @@ import { ISaver } from '../ISaver';
  * a "options.max_page_size" parameter to this class's [[configure]] method.
  * 
  * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html IIdentifiable]] (in the PipServices "Commons" package)
+ * 
+ * ### Examples ###
+ * 
+ *     export class MyDataMemoryPersistence extends IdentifiableMemoryPersistence<MyData, String>
+ *     implements IMyDataPersistence {
+ *         ...
+ *         public getPageByFilter(correlationId: string, filter: FilterParams, paging: PagingParams,
+ *         callback: (err: any, page: DataPage<MyData>) => void): void {
+ *             super.getPageByFilter(correlationId, filter, paging, null, null, callback);
+ *         }
+ *         ...
+ *
+ *         public getOneById(correlationId: string, id: K, callback: (err: any, item: T) => void): void {
+ *             super.getOneById(correlationId, id, callback);  
+ *         }
+ *         ...
+ *     }
  */
 export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extends MemoryPersistence<T> 
     implements IConfigurable, IWriter<T, K>, IGetter<T, K>, ISetter<T> {

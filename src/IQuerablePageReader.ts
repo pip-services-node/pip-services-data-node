@@ -5,6 +5,15 @@ import { SortParams } from 'pip-services-commons-node';
 
 /**
  * Interface for retrieving pages from a data source using a query.
+ * 
+ * ### Examples ###
+ * 
+ *     export class MyQuerablePageReader<T> implements IQuerablePageReader<T> {
+ *         public getPageByQuery(correlation_id: string, query: string, paging: PagingParams, sort: SortParams, 
+ *         callback: (err: any, page: DataPage<T>) => void): void {
+ *             ...
+ *         }
+ *     }
  */
 export interface IQuerablePageReader<T> {
     /**

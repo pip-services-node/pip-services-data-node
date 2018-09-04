@@ -6,6 +6,22 @@ import { AnyValueMap } from 'pip-services-commons-node';
  * of type T. Item deletion is done by the object's ID, which is of type K.
  * 
  * @see [[IGetter]] (for a complete set of CRUD operations)
+ * 
+ * ### Examples ###
+ * 
+ *     export class MyWriter<T, K> implements IWriter<T, K> {
+ *         public create(correlation_id: string, item: T, callback?: (err: any, item: T) => void): void {
+ *             ...
+ *         }
+ * 
+ *         public update(correlation_id: string, item: T, callback?: (err: any, item: T) => void): void {
+ *             ...
+ *         }
+ * 
+ *         public deleteById(correlation_id: string, id: K, callback?: (err: any, item: T) => void): void {
+ *             ...
+ *         }
+ *     }
  */
 export interface IWriter<T, K> {
     /**

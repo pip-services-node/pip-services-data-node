@@ -4,6 +4,15 @@ import { SortParams } from 'pip-services-commons-node';
 
 /**
  * Interface for retrieving filtered lists of items from a data source.
+ * 
+ * ### Examples ###
+ * 
+ *     export class MyFilteredReader<T> implements IFilteredReader<T> {
+ *         public getListByFilter(correlation_id: string, filter: FilterParams, sort: SortParams, 
+ *         callback: (err: any, items: T[]) => void): void {
+ *             ...
+ *         }
+ *     }
  */
 export interface IFilteredReader<T> {
     /**
