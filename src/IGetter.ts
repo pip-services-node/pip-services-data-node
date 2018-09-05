@@ -12,7 +12,8 @@ import { IIdentifiable } from 'pip-services-commons-node';
  * ### Examples ###
  * 
  *     export class MyGetter<T> implements IGetter<T> {
- *         public getOneById(correlation_id: string, id: K, callback: (err: any, item: T) => void): void {
+ *         public getOneById(correlation_id: string, id: K, 
+ *                 callback: (err: any, item: T) => void): void {
  *             ...
  *         }
  *     }

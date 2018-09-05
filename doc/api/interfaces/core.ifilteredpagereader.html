@@ -72,6 +72,17 @@
 					<div class="lead">
 						<p>Interface for retrieving filtered pages from a data source.</p>
 					</div>
+					<h3 id="examples">Examples</h3>
+					<pre><code>export <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyFilteredPageReader</span>&lt;<span class="hljs-title">T</span>&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title">IFilteredPageReader</span>&lt;<span class="hljs-title">T</span>&gt; {</span>
+
+    <span class="hljs-keyword">public</span> getPageByFilter(<span class="hljs-string">correlation_id:</span> string, <span class="hljs-string">filter:</span> FilterParams,
+<span class="hljs-symbol">             paging:</span> PagingParams, <span class="hljs-string">sort:</span> SortParams,
+<span class="hljs-symbol">             callback:</span> (<span class="hljs-string">err:</span> any, <span class="hljs-string">page:</span> DataPage&lt;T&gt;) =&gt; <span class="hljs-keyword">void</span>): <span class="hljs-keyword">void</span> {
+        ...
+    }
+
+}
+</code></pre>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
@@ -115,7 +126,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/e95a127/src/IFilteredPageReader.ts#L27">IFilteredPageReader.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/IFilteredPageReader.ts#L39">IFilteredPageReader.ts:39</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

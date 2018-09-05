@@ -7,7 +7,8 @@
  * ### Examples ###
  * 
  *     export class MySaver<T> implements ISaver<T> {
- *         public save(correlation_id: string, items: T[], callback?: (err?: any) => void): void {
+ *         public save(correlation_id: string, items: T[], 
+ *                 callback?: (err?: any) => void): void {
  *             ...
  *         }
  *     }

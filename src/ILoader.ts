@@ -7,7 +7,7 @@
  * ### Examples ###
  * 
  *     export class MyLoader<T> implements ILoader<T> {
- *         public load(correlation_id: string, callback: (err: any, items: T[]) => void): void {
+ *         public load(correlation_id: string, callback: (err: any, items: T[]) => void):void{
  *             ...
  *         }
  *     }

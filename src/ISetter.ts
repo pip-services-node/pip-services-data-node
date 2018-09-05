@@ -5,7 +5,8 @@
  * ### Examples ###
  * 
  *     export class MySetter<T> implements ISetter<T> {
- *         public set(correlation_id: string, item: T, callback?: (err: any, item: T) => void): void {
+ *         public set(correlation_id: string, item: T, 
+ *                 callback?: (err: any, item: T) => void): void {
  *             ...
  *         }
  *     }

@@ -76,7 +76,24 @@
 					<dl class="tsd-comment-tags">
 						<dt>see</dt>
 						<dd><p><a href="core.igetter.html">IGetter</a> (for a complete set of CRUD operations)</p>
-						</dd>
+							<h3 id="examples">Examples</h3>
+							<pre><code>export <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyWriter</span>&lt;<span class="hljs-title">T</span>, <span class="hljs-title">K</span>&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title">IWriter</span>&lt;<span class="hljs-title">T</span>, <span class="hljs-title">K</span>&gt; {</span>
+    <span class="hljs-keyword">public</span> create(<span class="hljs-string">correlation_id:</span> string, <span class="hljs-string">item:</span> T,
+            callback?: (<span class="hljs-string">err:</span> any, <span class="hljs-string">item:</span> T) =&gt; <span class="hljs-keyword">void</span>): <span class="hljs-keyword">void</span> {
+        ...
+    }
+
+    <span class="hljs-keyword">public</span> update(<span class="hljs-string">correlation_id:</span> string, <span class="hljs-string">item:</span> T,
+            callback?: (<span class="hljs-string">err:</span> any, <span class="hljs-string">item:</span> T) =&gt; <span class="hljs-keyword">void</span>): <span class="hljs-keyword">void</span> {
+        ...
+    }
+
+    <span class="hljs-keyword">public</span> deleteById(<span class="hljs-string">correlation_id:</span> string, <span class="hljs-string">id:</span> K,
+            callback?: (<span class="hljs-string">err:</span> any, <span class="hljs-string">item:</span> T) =&gt; <span class="hljs-keyword">void</span>): <span class="hljs-keyword">void</span> {
+        ...
+    }
+}
+</code></pre></dd>
 					</dl>
 				</div>
 			</section>
@@ -133,7 +150,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/e95a127/src/IWriter.ts#L19">IWriter.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/IWriter.ts#L38">IWriter.ts:38</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -198,7 +215,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/e95a127/src/IWriter.ts#L39">IWriter.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/IWriter.ts#L58">IWriter.ts:58</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -263,7 +280,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/e95a127/src/IWriter.ts#L29">IWriter.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/IWriter.ts#L48">IWriter.ts:48</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

@@ -9,8 +9,8 @@ import { SortParams } from 'pip-services-commons-node';
  * ### Examples ###
  * 
  *     export class MyQuerablePageReader<T> implements IQuerablePageReader<T> {
- *         public getPageByQuery(correlation_id: string, query: string, paging: PagingParams, sort: SortParams, 
- *         callback: (err: any, page: DataPage<T>) => void): void {
+ *         public getPageByQuery(correlation_id: string, query: string, paging: PagingParams, 
+ *                 sort: SortParams, callback: (err: any, page: DataPage<T>) => void): void {
  *             ...
  *         }
  *     }

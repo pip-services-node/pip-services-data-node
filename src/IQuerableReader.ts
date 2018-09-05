@@ -7,7 +7,8 @@ import { SortParams } from 'pip-services-commons-node';
  * ### Examples ###
  * 
  *     export class MyQuerableReader<T> implements IQuerableReader<T> {
- *         public getListByQuery(correlation_id: string, query: string, sort: SortParams, callback: (err: any, items: T[]) => void): void {
+ *         public getListByQuery(correlation_id: string, query: string, sort: SortParams, 
+ *                 callback: (err: any, items: T[]) => void): void {
  *             ...
  *         }
  *     }

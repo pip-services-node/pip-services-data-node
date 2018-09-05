@@ -30,19 +30,26 @@ import { ISaver } from '../ISaver';
  * 
  * ### Examples ###
  * 
- *     export class MyDataMemoryPersistence extends IdentifiableMemoryPersistence<MyData, String>
- *     implements IMyDataPersistence {
+ *     export class MyDataMemoryPersistence extends IdentifiableMemoryPersistence<MyData, 
+ *             String> implements IMyDataPersistence {
+ * 
  *         ...
- *         public getPageByFilter(correlationId: string, filter: FilterParams, paging: PagingParams,
- *         callback: (err: any, page: DataPage<MyData>) => void): void {
+ * 
+ *         public getPageByFilter(correlationId: string, 
+ *                 filter: FilterParams, paging: PagingParams, 
+ *                 callback: (err: any, page: DataPage<MyData>) => void): void {
  *             super.getPageByFilter(correlationId, filter, paging, null, null, callback);
  *         }
+ * 
  *         ...
  *
- *         public getOneById(correlationId: string, id: K, callback: (err: any, item: T) => void): void {
+ *         public getOneById(correlationId: string, id: K, 
+ *                 callback: (err: any, item: T) => void): void {
  *             super.getOneById(correlationId, id, callback);  
  *         }
+ * 
  *         ...
+ * 
  *     }
  */
 export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extends MemoryPersistence<T> 

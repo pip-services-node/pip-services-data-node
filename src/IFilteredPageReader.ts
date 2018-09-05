@@ -10,10 +10,13 @@ import { SortParams } from 'pip-services-commons-node';
  * ### Examples ###
  * 
  *     export class MyFilteredPageReader<T> implements IFilteredPageReader<T> {
- *         public getPageByFilter(correlation_id: string, filter: FilterParams, paging: PagingParams, sort: SortParams, 
- *         callback: (err: any, page: DataPage<T>) => void): void {
+ *         
+ *         public getPageByFilter(correlation_id: string, filter: FilterParams, 
+ *                  paging: PagingParams, sort: SortParams, 
+ *                  callback: (err: any, page: DataPage<T>) => void): void {
  *             ...
  *         }
+ * 
  *     }
  */
 export interface IFilteredPageReader<T> {

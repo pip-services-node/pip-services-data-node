@@ -79,7 +79,14 @@
 						</dd>
 						<dt>see</dt>
 						<dd><p>[IWriter] (for a complete set of CRUD operations)</p>
-						</dd>
+							<h3 id="examples">Examples</h3>
+							<pre><code>export <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyGetter</span>&lt;<span class="hljs-title">T</span>&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title">IGetter</span>&lt;<span class="hljs-title">T</span>&gt; {</span>
+    <span class="hljs-keyword">public</span> getOneById(<span class="hljs-string">correlation_id:</span> string, <span class="hljs-string">id:</span> K,
+<span class="hljs-symbol">            callback:</span> (<span class="hljs-string">err:</span> any, <span class="hljs-string">item:</span> T) =&gt; <span class="hljs-keyword">void</span>): <span class="hljs-keyword">void</span> {
+        ...
+    }
+}
+</code></pre></dd>
 					</dl>
 				</div>
 			</section>
@@ -134,7 +141,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/e95a127/src/IGetter.ts#L21">IGetter.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/IGetter.ts#L30">IGetter.ts:30</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

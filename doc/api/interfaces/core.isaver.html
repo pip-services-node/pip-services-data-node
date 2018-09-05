@@ -75,7 +75,14 @@
 					<dl class="tsd-comment-tags">
 						<dt>see</dt>
 						<dd><p><a href="core.iloader.html">ILoader</a></p>
-						</dd>
+							<h3 id="examples">Examples</h3>
+							<pre><code>export <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MySaver</span>&lt;<span class="hljs-title">T</span>&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title">ISaver</span>&lt;<span class="hljs-title">T</span>&gt; {</span>
+    <span class="hljs-keyword">public</span> save(<span class="hljs-string">correlation_id:</span> string, <span class="hljs-string">items:</span> T[],
+            callback?: (err?: any) =&gt; <span class="hljs-keyword">void</span>): <span class="hljs-keyword">void</span> {
+        ...
+    }
+}
+</code></pre></dd>
 					</dl>
 				</div>
 			</section>
@@ -126,7 +133,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/e95a127/src/ISaver.ts#L16">ISaver.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/ISaver.ts#L25">ISaver.ts:25</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

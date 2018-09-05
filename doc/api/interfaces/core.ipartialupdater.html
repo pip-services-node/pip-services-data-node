@@ -76,7 +76,14 @@
 					<dl class="tsd-comment-tags">
 						<dt>see</dt>
 						<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html" class="external">IIdentifiable</a></p>
-						</dd>
+							<h3 id="examples">Examples</h3>
+							<pre><code>export <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyPartialUpdater</span>&lt;<span class="hljs-title">T</span>&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title">IPartialUpdater</span>&lt;<span class="hljs-title">T</span>, <span class="hljs-title">K</span>&gt; {</span>
+    <span class="hljs-keyword">public</span> updatePartially(<span class="hljs-string">correlation_id:</span> string, <span class="hljs-string">id:</span> K, <span class="hljs-string">data:</span> AnyValueMap,
+            callback?: (<span class="hljs-string">err:</span> any, <span class="hljs-string">item:</span> T) =&gt; <span class="hljs-keyword">void</span>): <span class="hljs-keyword">void</span> {
+        ...
+    }
+}
+</code></pre></dd>
 					</dl>
 				</div>
 			</section>
@@ -124,7 +131,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/e95a127/src/IPartialUpdater.ts#L24">IPartialUpdater.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/IPartialUpdater.ts#L33">IPartialUpdater.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

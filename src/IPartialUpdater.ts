@@ -11,7 +11,8 @@ import { AnyValueMap } from 'pip-services-commons-node';
  * ### Examples ###
  * 
  *     export class MyPartialUpdater<T> implements IPartialUpdater<T, K> {
- *         public updatePartially(correlation_id: string, id: K, data: AnyValueMap, callback?: (err: any, item: T) => void): void {
+ *         public updatePartially(correlation_id: string, id: K, data: AnyValueMap, 
+ *                 callback?: (err: any, item: T) => void): void {
  *             ...
  *         }
  *     }

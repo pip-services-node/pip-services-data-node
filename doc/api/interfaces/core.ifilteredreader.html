@@ -72,6 +72,16 @@
 					<div class="lead">
 						<p>Interface for retrieving filtered lists of items from a data source.</p>
 					</div>
+					<h3 id="examples">Examples</h3>
+					<pre><code>export <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyFilteredReader</span>&lt;<span class="hljs-title">T</span>&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title">IFilteredReader</span>&lt;<span class="hljs-title">T</span>&gt; {</span>
+
+    <span class="hljs-keyword">public</span> getListByFilter(<span class="hljs-string">correlation_id:</span> string, <span class="hljs-string">filter:</span> FilterParams,
+<span class="hljs-symbol">             sort:</span> SortParams, <span class="hljs-string">callback:</span> (<span class="hljs-string">err:</span> any, <span class="hljs-string">items:</span> T[]) =&gt; <span class="hljs-keyword">void</span>): <span class="hljs-keyword">void</span> {
+        ...
+    }
+
+}
+</code></pre>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
@@ -115,7 +125,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/e95a127/src/IFilteredReader.ts#L22">IFilteredReader.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/IFilteredReader.ts#L33">IFilteredReader.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

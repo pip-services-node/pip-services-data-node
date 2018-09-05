@@ -10,15 +10,18 @@ import { AnyValueMap } from 'pip-services-commons-node';
  * ### Examples ###
  * 
  *     export class MyWriter<T, K> implements IWriter<T, K> {
- *         public create(correlation_id: string, item: T, callback?: (err: any, item: T) => void): void {
+ *         public create(correlation_id: string, item: T, 
+ *                 callback?: (err: any, item: T) => void): void {
  *             ...
  *         }
  * 
- *         public update(correlation_id: string, item: T, callback?: (err: any, item: T) => void): void {
+ *         public update(correlation_id: string, item: T, 
+ *                 callback?: (err: any, item: T) => void): void {
  *             ...
  *         }
  * 
- *         public deleteById(correlation_id: string, id: K, callback?: (err: any, item: T) => void): void {
+ *         public deleteById(correlation_id: string, id: K, 
+ *                 callback?: (err: any, item: T) => void): void {
  *             ...
  *         }
  *     }
