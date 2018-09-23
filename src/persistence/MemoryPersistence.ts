@@ -9,13 +9,45 @@ import { ILoader } from '../ILoader';
 import { ISaver } from '../ISaver';
 
 /**
- * Stores items of type T in memory and provides methods for working with the data 
- * that is stored.
+ * Abstract persistence component that stores data in memory.
  * 
- * Implements [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/refer.ireferenceable.html IReferenceable]],
- * [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/run.iopenable.html IOpenable]], and 
- * [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/run.icleanable.html ICleanable]] 
- * for lifecycle support.
+ * This is the most basic persistence component that is only
+ * able to store data items of any type. Specific CRUD operations
+ * over the data items must be implemented in child classes by
+ * accessing this._items property and calling [[save]] method.
+ * 
+ * The component supports loading and saving items from another data source.
+ * That allows to use it as a base class for file and other types
+ * of persistence components that cache all data in memory. 
+ * 
+ * ### References ###
+ * 
+ * - *:logger:*:*:1.0         (optional) [[ILogger]] components to pass log messages
+ * 
+ * ### Example ###
+ * 
+ * class MyMemoryPersistence extends MemoryPersistence<MyData> {
+ *    
+ *   public getByName(correlationId: string, name: string, callback: (err, item) => void): void {
+ *     let item = _.find(this._items, (d) => d.name == name);
+ *     callback(null, item);
+ *   }); 
+ * 
+ *   public set(correlatonId: string, item: MyData, callback: (err) => void): void {
+ *     this._items = _.filter(this._items, (d) => d.name != name);
+ *     this._items.push(item);
+ *     this.save(correlationId, callback);
+ *   }
+ * 
+ * }
+ * 
+ * let persistence = new MyMemoryPersistence();
+ * 
+ * persistence.set("123", { name: "ABC" }, (err) => {
+ *     persistence.getByName("123", "ABC", (err, item) => {
+ *         console.log(item);                   // Result: { name: "ABC" }
+ *     });
+ * });
  */
 export class MemoryPersistence<T> implements IReferenceable, IOpenable, ICleanable {
     protected _logger: CompositeLogger = new CompositeLogger();
@@ -25,10 +57,10 @@ export class MemoryPersistence<T> implements IReferenceable, IOpenable, ICleanab
     protected _opened: boolean = false;
 
     /**
-     * Creates a new MemoryPersistence.
+     * Creates a new instance of the persistence.
      * 
-     * @param loader    the loader to use for loading items from a data source.
-     * @param saver     the saver to use for saving items to a data source.
+     * @param loader    (optional) a loader to load items from external datasource.
+     * @param saver     (optional) a saver to save items to external datasource.
      */
     public constructor(loader?: ILoader<T>, saver?: ISaver<T>) {
         this._loader = loader;
@@ -36,33 +68,28 @@ export class MemoryPersistence<T> implements IReferenceable, IOpenable, ICleanab
     }
 
     /**
-     * Sets the source of this object's logger using the context-info reference that is 
-     * passed to this method.
-     * 
-     * @param references    an IReferences object, containing the "context-info" reference to set.
-     * 
-     * @see [[ContextInfo]]
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/refer.ireferences.html IReferences]] (in the PipServices "Commons" package)
+	 * Sets references to dependent components.
+	 * 
+	 * @param references 	references to locate the component dependencies. 
      */
     public setReferences(references: IReferences): void {
         this._logger.setReferences(references);
     }
 
     /**
-     * @returns whether or not this MemoryPersistence's items have been loaded to memory.
-     * 
-     * @see [[open]]
+	 * Checks if the component is opened.
+	 * 
+	 * @returns true if the component has been opened and false otherwise.
      */
     public isOpen(): boolean {
         return this._opened;
     }
 
     /**
-     * Opens this MemoryPersistence by attempting to load its items to memory.
-     * 
-     * @param correlationId     (optional) transaction id to trace execution through call chain.
-     * @param callback          (optional) the function to call once the opening process is complete.
-     *                          Will be called with an error if one is raised.
+	 * Opens the component.
+	 * 
+	 * @param correlationId 	(optional) transaction id to trace execution through call chain.
+     * @param callback 			callback function that receives error or null no errors occured.
      */
     public open(correlationId: string,  callback?: (err: any) => void): void {
         this.load(correlationId, (err) => {
@@ -87,11 +114,10 @@ export class MemoryPersistence<T> implements IReferenceable, IOpenable, ICleanab
     }
 
     /**
-     * Closes this MemoryPersistence by attempting to save its items to memory.
-     * 
-     * @param correlationId     (optional) transaction id to trace execution through call chain.
-     * @param callback          (optional) the function to call once the closing process is complete.
-     *                          Will be called with an error if one is raised.
+	 * Closes component and frees used resources.
+	 * 
+	 * @param correlationId 	(optional) transaction id to trace execution through call chain.
+     * @param callback 			callback function that receives error or null no errors occured.
      */
     public close(correlationId: string, callback?: (err: any) => void): void {
         this.save(correlationId, (err) => {
@@ -102,11 +128,10 @@ export class MemoryPersistence<T> implements IReferenceable, IOpenable, ICleanab
     }
 
     /**
-     * Saves the items stored by this MemoryPersistence to a data source.
+     * Saves items to external data source using configured saver component.
      * 
      * @param correlationId     (optional) transaction id to trace execution through call chain.
-     * @param callback          (optional) the function to call once the saving process is complete.
-     *                          Will be called with an error if one is raised.
+     * @param callback          (optional) callback function that receives error or null for success.
      */
     public save(correlationId: string, callback?: (err: any) => void): void {
         if (this._saver == null) {
@@ -123,14 +148,10 @@ export class MemoryPersistence<T> implements IReferenceable, IOpenable, ICleanab
     }
 
     /**
-     * Clears this MemoryPersistence by removing all of its items from memory and calling the 
-     * [[save]] method.
-     * 
-     * @param correlationId     (optional) transaction id to trace execution through call chain.
-     * @param callback          (optional) the function to call once the clearing process is complete. 
-     *                          Will be called with an error if one is raised.
-     * 
-     * @see [[save]]
+	 * Clears component state.
+	 * 
+	 * @param correlationId 	(optional) transaction id to trace execution through call chain.
+     * @param callback 			callback function that receives error or null no errors occured.
      */
     public clear(correlationId: string, callback?: (err?: any) => void): void {
         this._items = [];

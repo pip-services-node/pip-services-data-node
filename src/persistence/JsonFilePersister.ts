@@ -13,56 +13,69 @@ import { ILoader } from '../ILoader';
 import { ISaver } from '../ISaver';
 
 /**
- * Helper class that provides methods for working with JSON data that is stored in a file.
+ * Persistence component that loads and saves data from/to flat file.
  * 
- * A JsonFilePersister's path can be configured by passing ConfigParams with 
- * a "path" parameter to this class's [[configure]] method.
+ * It is used by FilePersistence, but can be useful on its own.
+ * 
+ * ### Configuration parameters ###
+ * 
+ * - path:          path to the file where data is stored
+ * 
+ * ### Example ###
+ * 
+ * let persister = new JsonFilePersister("./data/data.json");
+ * 
+ * persister.save("123", ["A", "B", "C"], (err) => {
+ *     ...
+ *     persister.load("123", (err, items) => {
+ *         console.log(items);                      // Result: ["A", "B", "C"]
+ *     });
+ * });
  */
 export class JsonFilePersister<T> implements ILoader<T>, ISaver<T>, IConfigurable {
     private _path: string;
 
     /**
-     * Creates a new JsonFilePersister.
+     * Creates a new instance of the persistence.
      * 
-     * @param path  the path to the target JSON file.
+     * @param path  (optional) a path to the file where data is stored.
      */
     public constructor(path?: string) {
         this._path = path;
     }
 
     /**
-     * @returns the path to the target JSON file.
+     * Gets the file path where data is stored.
+     * 
+     * @returns the file path where data is stored.
      */
     public get path(): string {
         return this._path;
     }
 
     /**
-     * @param value     the path to the target JSON file.
+     * Sets the file path where data is stored.
+     * 
+     * @param value     the file path where data is stored.
      */
     public set path(value: string) {
         this._path = value;
     }
 
     /**
-     * Configures this JsonFilePersister using the parameters provided. Looks for a parameter 
-     * with the key "path" and sets it for this object. If the key is not found, the value will 
-     * default to the value that was previously set for this object.
+     * Configures component by passing configuration parameters.
      * 
-     * @param config    ConfigParams, containing a "path" item.
-     * 
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]] (in the PipServices "Commons" package)
+     * @param config    configuration parameters to be set.
      */
     public configure(config: ConfigParams): void {
         this._path = config.getAsStringWithDefault("path", this._path);
     }
 
     /**
-     * Loads the JSON data that is stored in this JsonFilePersister's target file.
+     * Loads data items from external JSON file.
      * 
      * @param correlation_id    (optional) transaction id to trace execution through call chain.
-     * @param callback          the function to call with the loaded data 
-     *                          (or with an error, if one is raised).
+     * @param callback          callback function that receives loaded items or error.
      */
     public load(correlation_id: string, callback: (err: any, data: T[]) => void): void {
         if (this._path == null) {
@@ -90,16 +103,15 @@ export class JsonFilePersister<T> implements ILoader<T>, ISaver<T>, IConfigurabl
     }
 
     /**
-     * Saves the given entities as JSON data to this JsonFilePersister's target file.
+     * Saves given data items to external JSON file.
      * 
      * @param correlation_id    (optional) transaction id to trace execution through call chain.
-     * @param entities          the entities to save.
-     * @param callback          the function to call once the saving process is complete. 
-     *                          Will be called with an error if one is raised.
+     * @param items             list if data items to save
+     * @param callback          callback function that error or null for success.
      */
-    public save(correlation_id: string, entities: T[], callback?: (err: any) => void): void {
+    public save(correlation_id: string, items: T[], callback?: (err: any) => void): void {
         try {
-            let json = JsonConverter.toJson(entities);
+            let json = JsonConverter.toJson(items);
             fs.writeFileSync(this._path, json);
             if (callback) callback(null);
         } catch (ex) {

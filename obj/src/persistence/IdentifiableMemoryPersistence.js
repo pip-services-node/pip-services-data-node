@@ -1,19 +1,107 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/** @module persistence */
+/** @hidden */
 let _ = require('lodash');
 const pip_services_commons_node_1 = require("pip-services-commons-node");
 const pip_services_commons_node_2 = require("pip-services-commons-node");
 const pip_services_commons_node_3 = require("pip-services-commons-node");
 const pip_services_commons_node_4 = require("pip-services-commons-node");
 const MemoryPersistence_1 = require("./MemoryPersistence");
+/**
+ * Abstract persistence component that stores data in memory
+ * and implements a number of CRUD operations over data items with unique ids.
+ * The data items must implement IIdentifiable interface.
+ *
+ * In basic scenarios child classes shall only override [[getPageByFilter]],
+ * [[getListByFilter]] or [[deleteByFilter]] operations with specific filter function.
+ * All other operations can be used out of the box.
+ *
+ * In complex scenarios child classes can implement additional operations by
+ * accessing cached items via this._items property and calling [[save]] method
+ * on updates.
+ *
+ * @see [[MemoryPersistence]]
+ *
+ * ### Configuration parameters ###
+ *
+ * options:
+ *     max_page_size:       Maximum number of items returned in a single page (default: 100)
+ *
+ * ### References ###
+ *
+ * - *:logger:*:*:1.0         (optional) [[ILogger]] components to pass log messages
+ *
+ * ### Examples ###
+ *
+ * class MyMemoryPersistence extends IdentifiableMemoryPersistence<MyData, string> {
+ *
+ *   private composeFilter(filter: FilterParams): any {
+ *       filter = filter || new FilterParams();
+ *       let name = filter.getAsNullableString("name");
+ *       return (item) => {
+ *           if (name != null && item.name != name)
+ *               return false;
+ *           return true;
+ *       };
+ *   }
+ *
+ *   public getPageByFilter(correlationId: string, filter: FilterParams, paging: PagingParams,
+ *       callback: (err: any, page: DataPage<MyData>) => void): void {
+ *       super.getPageByFilter(correlationId, this.composeFilter(filter), paging, null, null, callback);
+ *   }
+ *
+ * }
+ *
+ * let persistence = new MyMemoryPersistence();
+ *
+ * persistence.create("123", { id: "1", name: "ABC" }, (err, item) => {
+ *     persistence.getPageByFilter(
+ *         "123",
+ *         FilterParams.fromTuples("name", "ABC"),
+ *         null,
+ *         (err, page) => {
+ *             console.log(page.data);          // Result: { id: "1", name: "ABC" }
+ *
+ *             persistence.deleteById("123", "1", (err, item) => {
+ *                ....
+ *             });
+ *         }
+ *     )
+ * });
+ */
 class IdentifiableMemoryPersistence extends MemoryPersistence_1.MemoryPersistence {
+    /**
+     * Creates a new instance of the persistence.
+     *
+     * @param loader    (optional) a loader to load items from external datasource.
+     * @param saver     (optional) a saver to save items to external datasource.
+     */
     constructor(loader, saver) {
         super(loader, saver);
         this._maxPageSize = 100;
     }
+    /**
+     * Configures component by passing configuration parameters.
+     *
+     * @param config    configuration parameters to be set.
+     */
     configure(config) {
         this._maxPageSize = config.getAsIntegerWithDefault("options.max_page_size", this._maxPageSize);
     }
+    /**
+     * Gets a page of data items retrieved by a given filter and sorted according to sort parameters.
+     *
+     * This method shall be called by a public getPageByFilter method from child class that
+     * receives FilterParams and converts them into a filter function.
+     *
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param filter            (optional) a filter function to filter items
+     * @param paging            (optional) paging parameters
+     * @param sort              (optional) sorting parameters
+     * @param select            (optional) projection parameters (not used yet)
+     * @param callback          callback function that receives a data page or error.
+     */
     getPageByFilter(correlationId, filter, paging, sort, select, callback) {
         let items = this._items;
         // Filter and sort
@@ -35,6 +123,19 @@ class IdentifiableMemoryPersistence extends MemoryPersistence_1.MemoryPersistenc
         let page = new pip_services_commons_node_2.DataPage(items, total);
         callback(null, page);
     }
+    /**
+     * Gets a list of data items retrieved by a given filter and sorted according to sort parameters.
+     *
+     * This method shall be called by a public getListByFilter method from child class that
+     * receives FilterParams and converts them into a filter function.
+     *
+     * @param correlationId    (optional) transaction id to trace execution through call chain.
+     * @param filter           (optional) a filter function to filter items
+     * @param paging           (optional) paging parameters
+     * @param sort             (optional) sorting parameters
+     * @param select           (optional) projection parameters (not used yet)
+     * @param callback         callback function that receives a data list or error.
+     */
     getListByFilter(correlationId, filter, sort, select, callback) {
         let items = this._items;
         // Apply filter
@@ -46,12 +147,29 @@ class IdentifiableMemoryPersistence extends MemoryPersistence_1.MemoryPersistenc
         this._logger.trace(correlationId, "Retrieved %d items", items.length);
         callback(null, items);
     }
+    /**
+     * Gets a list of data items retrieved by given unique ids.
+     *
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param ids               ids of data items to be retrieved
+     * @param callback         callback function that receives a data list or error.
+     */
     getListByIds(correlationId, ids, callback) {
         let filter = (item) => {
             return _.indexOf(ids, item.id) >= 0;
         };
         this.getListByFilter(correlationId, filter, null, null, callback);
     }
+    /**
+     * Gets a random item from items that match to a given filter.
+     *
+     * This method shall be called by a public getOneRandom method from child class that
+     * receives FilterParams and converts them into a filter function.
+     *
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param filter            (optional) a filter function to filter items.
+     * @param callback          callback function that receives a random item or error.
+     */
     getOneRandom(correlationId, filter, callback) {
         let items = this._items;
         // Apply filter
@@ -64,6 +182,13 @@ class IdentifiableMemoryPersistence extends MemoryPersistence_1.MemoryPersistenc
             this._logger.trace(correlationId, "Nothing to return as random item");
         callback(null, item);
     }
+    /**
+     * Gets a data item by its unique id.
+     *
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param id                an id of data item to be retrieved.
+     * @param callback          callback function that receives data item or error.
+     */
     getOneById(correlationId, id, callback) {
         let items = this._items.filter((x) => { return x.id == id; });
         let item = items.length > 0 ? items[0] : null;
@@ -73,6 +198,13 @@ class IdentifiableMemoryPersistence extends MemoryPersistence_1.MemoryPersistenc
             this._logger.trace(correlationId, "Cannot find item by %s", id);
         callback(null, item);
     }
+    /**
+     * Creates a data item.
+     *
+     * @param correlation_id    (optional) transaction id to trace execution through call chain.
+     * @param item              an item to be created.
+     * @param callback          (optional) callback function that receives created item or error.
+     */
     create(correlationId, item, callback) {
         item = _.clone(item);
         if (item.id == null)
@@ -84,6 +216,14 @@ class IdentifiableMemoryPersistence extends MemoryPersistence_1.MemoryPersistenc
                 callback(err, item);
         });
     }
+    /**
+     * Sets a data item. If the data item exists it updates it,
+     * otherwise it create a new data item.
+     *
+     * @param correlation_id    (optional) transaction id to trace execution through call chain.
+     * @param item              a item to be set.
+     * @param callback          (optional) callback function that receives updated item or error.
+     */
     set(correlationId, item, callback) {
         item = _.clone(item);
         if (item.id == null)
@@ -99,6 +239,13 @@ class IdentifiableMemoryPersistence extends MemoryPersistence_1.MemoryPersistenc
                 callback(err, item);
         });
     }
+    /**
+     * Updates a data item.
+     *
+     * @param correlation_id    (optional) transaction id to trace execution through call chain.
+     * @param item              an item to be updated.
+     * @param callback          (optional) callback function that receives updated item or error.
+     */
     update(correlationId, item, callback) {
         let index = this._items.map((x) => { return x.id; }).indexOf(item.id);
         if (index < 0) {
@@ -114,6 +261,14 @@ class IdentifiableMemoryPersistence extends MemoryPersistence_1.MemoryPersistenc
                 callback(err, item);
         });
     }
+    /**
+     * Updates only few selected fields in a data item.
+     *
+     * @param correlation_id    (optional) transaction id to trace execution through call chain.
+     * @param id                an id of data item to be updated.
+     * @param data              a map with fields to be updated.
+     * @param callback          callback function that receives updated item or error.
+     */
     updatePartially(correlationId, id, data, callback) {
         let index = this._items.map((x) => { return x.id; }).indexOf(id);
         if (index < 0) {
@@ -130,6 +285,13 @@ class IdentifiableMemoryPersistence extends MemoryPersistence_1.MemoryPersistenc
                 callback(err, item);
         });
     }
+    /**
+     * Deleted a data item by it's unique id.
+     *
+     * @param correlation_id    (optional) transaction id to trace execution through call chain.
+     * @param id                an id of the item to be deleted
+     * @param callback          (optional) callback function that receives deleted item or error.
+     */
     deleteById(correlationId, id, callback) {
         var index = this._items.map((x) => { return x.id; }).indexOf(id);
         var item = this._items[index];
@@ -145,6 +307,16 @@ class IdentifiableMemoryPersistence extends MemoryPersistence_1.MemoryPersistenc
                 callback(err, item);
         });
     }
+    /**
+     * Deletes data items that match to a given filter.
+     *
+     * This method shall be called by a public deleteByFilter method from child class that
+     * receives FilterParams and converts them into a filter function.
+     *
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param filter            (optional) a filter function to filter items.
+     * @param callback          (optional) callback function that receives error or null for success.
+     */
     deleteByFilter(correlationId, filter, callback) {
         let deleted = 0;
         for (let index = this._items.length - 1; index >= 0; index--) {
@@ -164,6 +336,13 @@ class IdentifiableMemoryPersistence extends MemoryPersistence_1.MemoryPersistenc
                 callback(err);
         });
     }
+    /**
+     * Deletes multiple data items by their unique ids.
+     *
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param ids               ids of data items to be deleted.
+     * @param callback          (optional) callback function that receives error or null for success.
+     */
     deleteByIds(correlationId, ids, callback) {
         let filter = (item) => {
             return _.indexOf(ids, item.id) >= 0;

@@ -1,7 +1,54 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const pip_services_components_node_1 = require("pip-services-components-node");
+/**
+ * Abstract persistence component that stores data in memory.
+ *
+ * This is the most basic persistence component that is only
+ * able to store data items of any type. Specific CRUD operations
+ * over the data items must be implemented in child classes by
+ * accessing this._items property and calling [[save]] method.
+ *
+ * The component supports loading and saving items from another data source.
+ * That allows to use it as a base class for file and other types
+ * of persistence components that cache all data in memory.
+ *
+ * ### References ###
+ *
+ * - *:logger:*:*:1.0         (optional) [[ILogger]] components to pass log messages
+ *
+ * ### Example ###
+ *
+ * class MyMemoryPersistence extends MemoryPersistence<MyData> {
+ *
+ *   public getByName(correlationId: string, name: string, callback: (err, item) => void): void {
+ *     let item = _.find(this._items, (d) => d.name == name);
+ *     callback(null, item);
+ *   });
+ *
+ *   public set(correlatonId: string, item: MyData, callback: (err) => void): void {
+ *     this._items = _.filter(this._items, (d) => d.name != name);
+ *     this._items.push(item);
+ *     this.save(correlationId, callback);
+ *   }
+ *
+ * }
+ *
+ * let persistence = new MyMemoryPersistence();
+ *
+ * persistence.set("123", { name: "ABC" }, (err) => {
+ *     persistence.getByName("123", "ABC", (err, item) => {
+ *         console.log(item);                   // Result: { name: "ABC" }
+ *     });
+ * });
+ */
 class MemoryPersistence {
+    /**
+     * Creates a new instance of the persistence.
+     *
+     * @param loader    (optional) a loader to load items from external datasource.
+     * @param saver     (optional) a saver to save items to external datasource.
+     */
     constructor(loader, saver) {
         this._logger = new pip_services_components_node_1.CompositeLogger();
         this._items = [];
@@ -9,12 +56,28 @@ class MemoryPersistence {
         this._loader = loader;
         this._saver = saver;
     }
+    /**
+     * Sets references to dependent components.
+     *
+     * @param references 	references to locate the component dependencies.
+     */
     setReferences(references) {
         this._logger.setReferences(references);
     }
+    /**
+     * Checks if the component is opened.
+     *
+     * @returns true if the component has been opened and false otherwise.
+     */
     isOpen() {
         return this._opened;
     }
+    /**
+     * Opens the component.
+     *
+     * @param correlationId 	(optional) transaction id to trace execution through call chain.
+     * @param callback 			callback function that receives error or null no errors occured.
+     */
     open(correlationId, callback) {
         this.load(correlationId, (err) => {
             this._opened = true;
@@ -37,6 +100,12 @@ class MemoryPersistence {
                 callback(err);
         });
     }
+    /**
+     * Closes component and frees used resources.
+     *
+     * @param correlationId 	(optional) transaction id to trace execution through call chain.
+     * @param callback 			callback function that receives error or null no errors occured.
+     */
     close(correlationId, callback) {
         this.save(correlationId, (err) => {
             this._opened = false;
@@ -44,6 +113,12 @@ class MemoryPersistence {
                 callback(err);
         });
     }
+    /**
+     * Saves items to external data source using configured saver component.
+     *
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param callback          (optional) callback function that receives error or null for success.
+     */
     save(correlationId, callback) {
         if (this._saver == null) {
             if (callback)
@@ -57,6 +132,12 @@ class MemoryPersistence {
                 callback(err);
         });
     }
+    /**
+     * Clears component state.
+     *
+     * @param correlationId 	(optional) transaction id to trace execution through call chain.
+     * @param callback 			callback function that receives error or null no errors occured.
+     */
     clear(correlationId, callback) {
         this._items = [];
         this._logger.trace(correlationId, "Cleared items");

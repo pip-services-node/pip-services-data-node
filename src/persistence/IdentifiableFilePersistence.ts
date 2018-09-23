@@ -6,28 +6,79 @@ import { IdentifiableMemoryPersistence } from './IdentifiableMemoryPersistence';
 import { JsonFilePersister } from './JsonFilePersister'
 
 /**
- * Stores [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html identifiable]] 
- * items of type T in a JSON file and provides methods for working with the data 
- * that is stored.
+ * Abstract persistence component that stores data in flat files
+ * and implements a number of CRUD operations over data items with unique ids.
+ * The data items must implement IIdentifiable interface.
  * 
+ * In basic scenarios child classes shall only override [[getPageByFilter]],
+ * [[getListByFilter]] or [[deleteByFilter]] operations with specific filter function.
+ * All other operations can be used out of the box. 
  * 
- * An IdentifiableFilePersistence's target file path can be configured by passing ConfigParams 
- * with a "path" parameter to this class's [[configure]] method. Additionally, the 
- * max page size can be configured by passing ConfigParams with a "options.max_page_size" 
- * parameter.
+ * In complex scenarios child classes can implement additional operations by 
+ * accessing cached items via this._items property and calling [[save]] method
+ * on updates.
  * 
  * @see [[JsonFilePersister]]
  * @see [[MemoryPersistence]]
- * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html IIdentifiable]] (in the PipServices "Commons" package)
+ * 
+ * ### Configuration parameters ###
+ * 
+ * path:                    path to the file where data is stored
+ * options:
+ *     max_page_size:       Maximum number of items returned in a single page (default: 100)
+ * 
+ * ### References ###
+ * 
+ * - *:logger:*:*:1.0         (optional) [[ILogger]] components to pass log messages
+ * 
+ * ### Examples ###
+ * 
+ * class MyFilePersistence extends IdentifiableFilePersistence<MyData, string> {
+ *   public constructor(path?: string) {
+ *     super(new JsonPersister(path));
+ *   }
+ * 
+ *   private composeFilter(filter: FilterParams): any {
+ *       filter = filter || new FilterParams();
+ *       let name = filter.getAsNullableString("name");
+ *       return (item) => {
+ *           if (name != null && item.name != name)
+ *               return false;
+ *           return true;
+ *       };
+ *   }
+ * 
+ *   public getPageByFilter(correlationId: string, filter: FilterParams, paging: PagingParams, 
+ *       callback: (err: any, page: DataPage<MyData>) => void): void {
+ *       super.getPageByFilter(correlationId, this.composeFilter(filter), paging, null, null, callback);
+ *   }
+ * 
+ * }
+ * 
+ * let persistence = new MyFilePersistence("./data/data.json");
+ * 
+ * persistence.create("123", { id: "1", name: "ABC" }, (err, item) => {
+ *     persistence.getPageByFilter(
+ *         "123",
+ *         FilterParams.fromTuples("name", "ABC"),
+ *         null,
+ *         (err, page) => {
+ *             console.log(page.data);          // Result: { id: "1", name: "ABC" }
+ * 
+ *             persistence.deleteById("123", "1", (err, item) => {
+ *                ....
+ *             });
+ *         }
+ *     )
+ * });
  */
 export class IdentifiableFilePersistence<T extends IIdentifiable<K>, K> extends IdentifiableMemoryPersistence<T, K> {
     protected readonly _persister: JsonFilePersister<T>;
 
     /**
-     * Creates a new IdentifiableFilePersistence.
+     * Creates a new instance of the persistence.
      * 
-     * @param persister     the JsonFilePersister to use for loading and saving 
-     *                      JSON data to a file.
+     * @param persister    (optional) a persister component that loads and saves data from/to flat file.
      */
     public constructor(persister?: JsonFilePersister<T>) {
         if (persister == null) 
@@ -39,14 +90,9 @@ export class IdentifiableFilePersistence<T extends IIdentifiable<K>, K> extends 
     }
 
     /**
-     * Configures the path to the target file, with which this object's [[JsonFilePersister]] 
-     * will be working, as well as the max page size.
+     * Configures component by passing configuration parameters.
      * 
-     * @param config    ConfigParams, containing a "path" and/or "options.max_page_size" item.
-     * 
-     * @see [[JsonFilePersister.configure]]
-     * @see [[IdentifiableMemoryPersistence.configure]]
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]] (in the PipServices "Commons" package)
+     * @param config    configuration parameters to be set.
      */
     public configure(config: ConfigParams): void {
         super.configure(config);

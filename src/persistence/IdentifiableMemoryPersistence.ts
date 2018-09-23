@@ -19,82 +19,102 @@ import { ILoader } from '../ILoader';
 import { ISaver } from '../ISaver';
 
 /**
- * Stores items of type T in memory, 
- * [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html identifiable]] 
- * by their keys of type K, and provides methods for working with the items stored.
+ * Abstract persistence component that stores data in memory
+ * and implements a number of CRUD operations over data items with unique ids.
+ * The data items must implement IIdentifiable interface.
  * 
- * An IdentifiableMemoryPersistence's max page size can be configured by passing ConfigParams with 
- * a "options.max_page_size" parameter to this class's [[configure]] method.
+ * In basic scenarios child classes shall only override [[getPageByFilter]],
+ * [[getListByFilter]] or [[deleteByFilter]] operations with specific filter function.
+ * All other operations can be used out of the box. 
  * 
- * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html IIdentifiable]] (in the PipServices "Commons" package)
+ * In complex scenarios child classes can implement additional operations by 
+ * accessing cached items via this._items property and calling [[save]] method
+ * on updates.
+ * 
+ * @see [[MemoryPersistence]]
+ * 
+ * ### Configuration parameters ###
+ * 
+ * options:
+ *     max_page_size:       Maximum number of items returned in a single page (default: 100)
+ * 
+ * ### References ###
+ * 
+ * - *:logger:*:*:1.0         (optional) [[ILogger]] components to pass log messages
  * 
  * ### Examples ###
  * 
- *     export class MyDataMemoryPersistence extends IdentifiableMemoryPersistence<MyData, 
- *             String> implements IMyDataPersistence {
+ * class MyMemoryPersistence extends IdentifiableMemoryPersistence<MyData, string> {
  * 
- *         ...
+ *   private composeFilter(filter: FilterParams): any {
+ *       filter = filter || new FilterParams();
+ *       let name = filter.getAsNullableString("name");
+ *       return (item) => {
+ *           if (name != null && item.name != name)
+ *               return false;
+ *           return true;
+ *       };
+ *   }
  * 
- *         public getPageByFilter(correlationId: string, 
- *                 filter: FilterParams, paging: PagingParams, 
- *                 callback: (err: any, page: DataPage<MyData>) => void): void {
- *             super.getPageByFilter(correlationId, filter, paging, null, null, callback);
+ *   public getPageByFilter(correlationId: string, filter: FilterParams, paging: PagingParams, 
+ *       callback: (err: any, page: DataPage<MyData>) => void): void {
+ *       super.getPageByFilter(correlationId, this.composeFilter(filter), paging, null, null, callback);
+ *   }
+ * 
+ * }
+ * 
+ * let persistence = new MyMemoryPersistence();
+ * 
+ * persistence.create("123", { id: "1", name: "ABC" }, (err, item) => {
+ *     persistence.getPageByFilter(
+ *         "123",
+ *         FilterParams.fromTuples("name", "ABC"),
+ *         null,
+ *         (err, page) => {
+ *             console.log(page.data);          // Result: { id: "1", name: "ABC" }
+ * 
+ *             persistence.deleteById("123", "1", (err, item) => {
+ *                ....
+ *             });
  *         }
- * 
- *         ...
- *
- *         public getOneById(correlationId: string, id: K, 
- *                 callback: (err: any, item: T) => void): void {
- *             super.getOneById(correlationId, id, callback);  
- *         }
- * 
- *         ...
- * 
- *     }
+ *     )
+ * });
  */
 export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extends MemoryPersistence<T> 
     implements IConfigurable, IWriter<T, K>, IGetter<T, K>, ISetter<T> {
     protected _maxPageSize: number = 100;
 
     /**
-     * Creates a new IdentifiableMemoryPersistence.
+     * Creates a new instance of the persistence.
      * 
-     * @param loader    the loader to use for loading items from a data source.
-     * @param saver     the saver to use for saving items to a data source.
+     * @param loader    (optional) a loader to load items from external datasource.
+     * @param saver     (optional) a saver to save items to external datasource.
      */
     public constructor(loader?: ILoader<T>, saver?: ISaver<T>) {
         super(loader, saver);
     }
 
     /**
-     * Configures this IdentifiableMemoryPersistence using the parameters provided. Looks 
-     * for a parameter with the key "options.max_page_size" and sets it for this object. 
-     * If the key is not found, the value will default to the value that was previously set 
-     * for this object.
+     * Configures component by passing configuration parameters.
      * 
-     * @param config    ConfigParams, containing a "options.max_page_size" item.
-     * 
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]] (in the PipServices "Commons" package)
+     * @param config    configuration parameters to be set.
      */
     public configure(config: ConfigParams): void {
         this._maxPageSize = config.getAsIntegerWithDefault("options.max_page_size", this._maxPageSize);
     }
 
     /**
-     * Retrieves DataPages from this IdentifiableMemoryPersistence in accordance with the given parameters.
+     * Gets a page of data items retrieved by a given filter and sorted according to sort parameters.
+     * 
+     * This method shall be called by a public getPageByFilter method from child class that
+     * receives FilterParams and converts them into a filter function.
      * 
      * @param correlationId     (optional) transaction id to trace execution through call chain.
-     * @param filter            the filter parameters to filter by.
-     * @param paging            the paging parameters to use.
-     * @param sort              the sorting parameters to sort by.
-     * @param select            not used.
-     * @param callback          the function to call with the retrieved pages 
-     *                          (or with an error, if one is raised).
-     * 
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.datapage.html DataPage]] (in the PipServices "Commons" package)
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.filterparams.html FilterParams]] (in the PipServices "Commons" package)
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.pagingparams.html PagingParams]] (in the PipServices "Commons" package)
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.sortparams.html SortParams]] (in the PipServices "Commons" package)
+     * @param filter            (optional) a filter function to filter items
+     * @param paging            (optional) paging parameters
+     * @param sort              (optional) sorting parameters
+     * @param select            (optional) projection parameters (not used yet)
+     * @param callback          callback function that receives a data page or error.
      */
     protected getPageByFilter(correlationId: string, filter: any, 
         paging: PagingParams, sort: any, select: any, 
@@ -128,17 +148,17 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
     }
 
     /**
-     * Retrieves a list of items in accordance with the given parameters.
+     * Gets a list of data items retrieved by a given filter and sorted according to sort parameters.
+     * 
+     * This method shall be called by a public getListByFilter method from child class that
+     * receives FilterParams and converts them into a filter function.
      * 
      * @param correlationId    (optional) transaction id to trace execution through call chain.
-     * @param filter            the filter parameters to filter by.
-     * @param sort              the sorting parameters to sort by.
-     * @param select            not used.
-     * @param callback          the function to call with the retrieved list of items 
-     *                          (or with an error, if one is raised).
-     * 
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.filterparams.html FilterParams]] (in the PipServices "Commons" package)
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.sortparams.html SortParams]] (in the PipServices "Commons" package)
+     * @param filter           (optional) a filter function to filter items
+     * @param paging           (optional) paging parameters
+     * @param sort             (optional) sorting parameters
+     * @param select           (optional) projection parameters (not used yet)
+     * @param callback         callback function that receives a data list or error.
      */
     protected getListByFilter(correlationId: string, filter: any, sort: any, select: any,
         callback: (err: any, items: T[]) => void): void {
@@ -159,12 +179,11 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
     }
 
     /**
-     * Retrieves the items with the given IDs. 
+     * Gets a list of data items retrieved by given unique ids.
      * 
      * @param correlationId     (optional) transaction id to trace execution through call chain.
-     * @param ids               the ids of the items to retrieve.
-     * @param callback          the function to call with the retrieved list of items 
-     *                          (or with an error, if one is raised).
+     * @param ids               ids of data items to be retrieved
+     * @param callback         callback function that receives a data list or error.
      */
     public getListByIds(correlationId: string, ids: K[],
         callback: (err: any, items: T[]) => void): void {
@@ -175,12 +194,14 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
     }
 
     /**
-     * Retrieves a random item from the ones that are stored. 
+     * Gets a random item from items that match to a given filter.
+     * 
+     * This method shall be called by a public getOneRandom method from child class that
+     * receives FilterParams and converts them into a filter function.
      * 
      * @param correlationId     (optional) transaction id to trace execution through call chain.
-     * @param filter            the filtering function to filter the result by.
-     * @param callback          the function to call with the randomly retrieved item 
-     *                          (or with an error, if one is raised).
+     * @param filter            (optional) a filter function to filter items.
+     * @param callback          callback function that receives a random item or error.
      */
     protected getOneRandom(correlationId: string, filter: any, callback: (err: any, item: T) => void): void {
         let items = this._items;
@@ -200,12 +221,11 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
     }
 
     /**
-     * Retrieves an item by its ID. 
+     * Gets a data item by its unique id.
      * 
      * @param correlationId     (optional) transaction id to trace execution through call chain.
-     * @param id                the id of the item to retrieve.
-     * @param callback          the function to call with the retrieved item 
-     *                          (or with an error, if one is raised).
+     * @param id                an id of data item to be retrieved.
+     * @param callback          callback function that receives data item or error.
      */
     public getOneById(correlationId: string, id: K, callback: (err: any, item: T) => void): void {
         let items = this._items.filter((x) => {return x.id == id;});
@@ -220,14 +240,11 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
     }
 
     /**
-     * Creates a new record of the given item and [[save saves]] it.
+     * Creates a data item.
      * 
-     * @param correlationId     (optional) transaction id to trace execution through call chain.
-     * @param item              the item to create a record of.
-     * @param callback          (optional) the function to call with the created record 
-     *                          (or with an error, if one is raised).
-     * 
-     * @see [[save]]
+     * @param correlation_id    (optional) transaction id to trace execution through call chain.
+     * @param item              an item to be created.
+     * @param callback          (optional) callback function that receives created item or error.
      */
     public create(correlationId: string, item: T, callback?: (err: any, item: T) => void): void {
         item = _.clone(item);
@@ -243,14 +260,12 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
     }
 
     /**
-     * Sets the given item in this IdentifiableMemoryPersistence. If no objects exist with the item's 
-     * ID, then the item will simply be added. If one does exist, then it will be 
-     * overwritten by the item that was passed to this method.
+     * Sets a data item. If the data item exists it updates it,
+     * otherwise it create a new data item.
      * 
-     * @param correlationId    (optional) transaction id to trace execution through call chain.
-     * @param item              the item to set.
-     * @param callback          (optional) the function to call with the item that was set 
-     *                          (or with an error, if one is raised).
+     * @param correlation_id    (optional) transaction id to trace execution through call chain.
+     * @param item              a item to be set.
+     * @param callback          (optional) callback function that receives updated item or error.
      */
     public set(correlationId: string, item: T, callback?: (err: any, item: T) => void): void {
         item = _.clone(item);
@@ -270,12 +285,11 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
     }
 
     /**
-     * Updates the record of the given item.
+     * Updates a data item.
      * 
-     * @param correlationId    (optional) transaction id to trace execution through call chain.
-     * @param item              the item to update.
-     * @param callback          (optional) the function to call with the updated item 
-     *                          (or with an error, if one is raised).
+     * @param correlation_id    (optional) transaction id to trace execution through call chain.
+     * @param item              an item to be updated.
+     * @param callback          (optional) callback function that receives updated item or error.
      */
     public update(correlationId: string, item: T, callback?: (err: any, item: T) => void): void {
         let index = this._items.map((x) => { return x.id; }).indexOf(item.id);
@@ -296,15 +310,12 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
     }
 
     /**
-     * Performes a partial update for the record with the given ID.
+     * Updates only few selected fields in a data item.
      * 
-     * @param correlationId     (optional) transaction id to trace execution through call chain.
-     * @param id                the id of the item that is to be updated (partially).
-     * @param data              the map of items to update in the record.
-     * @param callback          (optional) the function to call with the updated item 
-     *                          (or with an error, if one is raised).
-     * 
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.anyvaluemap.html AnyValueMap]]
+     * @param correlation_id    (optional) transaction id to trace execution through call chain.
+     * @param id                an id of data item to be updated.
+     * @param data              a map with fields to be updated.
+     * @param callback          callback function that receives updated item or error.
      */
     public updatePartially(correlationId: string, id: K, data: AnyValueMap,
         callback?: (err: any, item: T) => void): void {
@@ -328,12 +339,11 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
     }
 
     /**
-     * Deletes the item with the given ID.
+     * Deleted a data item by it's unique id.
      * 
-     * @param correlationId    (optional) transaction id to trace execution through call chain.
-     * @param id                the id of the item that is to be deleted.
-     * @param callback          (optional) the function to call with the deleted item 
-     *                          (or with an error, if one is raised).
+     * @param correlation_id    (optional) transaction id to trace execution through call chain.
+     * @param id                an id of the item to be deleted
+     * @param callback          (optional) callback function that receives deleted item or error.
      */
     public deleteById(correlationId: string, id: K, callback?: (err: any, item: T) => void): void {
         var index = this._items.map((x) => { return x.id; }).indexOf(id);
@@ -354,11 +364,14 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
     }
 
     /**
-     * Deletes items that match the given filter.
+     * Deletes data items that match to a given filter.
+     * 
+     * This method shall be called by a public deleteByFilter method from child class that
+     * receives FilterParams and converts them into a filter function.
      * 
      * @param correlationId     (optional) transaction id to trace execution through call chain.
-     * @param filter            the filter function to delete items by.
-     * @param callback          (optional) the function to call with an error (if one is raised).
+     * @param filter            (optional) a filter function to filter items.
+     * @param callback          (optional) callback function that receives error or null for success.
      */
     protected deleteByFilter(correlationId: string, filter: any, callback?: (err: any) => void): void {
         let deleted = 0;
@@ -383,11 +396,11 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
     }
 
     /**
-     * Deletes multiple items by their provided IDs.
+     * Deletes multiple data items by their unique ids.
      * 
      * @param correlationId     (optional) transaction id to trace execution through call chain.
-     * @param ids               the ids of the items that are to be deleted.
-     * @param callback          (optional) the function to call with an error (if one is raised).
+     * @param ids               ids of data items to be deleted.
+     * @param callback          (optional) callback function that receives error or null for success.
      */
     public deleteByIds(correlationId: string, ids: K[], callback?: (err: any) => void): void {
         let filter = (item: T) => {

@@ -1,6 +1,9 @@
 /** 
  * @module persistence 
  * @preferred
+ * 
+ * Todo: Rewrite this description.
+ * 
  * Contains various persistence implementations (InMemory and File –persistences). These are "abstract" persistences, 
  * which only connect to data sources and do not implement the operations and methods for working the data. The classes
  * that extend these persistences must implement this logic on their own.  

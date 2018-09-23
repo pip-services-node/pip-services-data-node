@@ -6,24 +6,52 @@ import { JsonFilePersister } from './JsonFilePersister'
 import { MemoryPersistence } from './MemoryPersistence';
 
 /**
- * Stores items of type T in a JSON file and provides methods for working with the data 
- * that is stored.
+ * Abstract persistence component that stores data in flat files
+ * and caches them in memory.
  * 
- * A FilePersistence's target file path can be configured by passing ConfigParams with 
- * a "path" parameter to this class's [[configure]] method.
+ * This is the most basic persistence component that is only
+ * able to store data items of any type. Specific CRUD operations
+ * over the data items must be implemented in child classes by
+ * accessing this._items property and calling [[save]] method.
  * 
- * @see [[JsonFilePersister]]
  * @see [[MemoryPersistence]]
- * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/config.iconfigurable.html IConfigurable]] (in the PipServices "Commons" package)
+ * @see [[JsonPersister]]
+ * 
+ * ### Configuration parameters ###
+ * 
+ * path:                path to the file where data is stored
+ * 
+ * ### References ###
+ * 
+ * - *:logger:*:*:1.0   (optional) [[ILogger]] components to pass log messages
+ * 
+ * ### Example ###
+ * 
+ * class MyJsonFilePersistence extends FilePersistence<MyData> {
+ *   public constructor(path?: string) {
+ *     super(new JsonPersister(path));
+ *   }
+ * 
+ *   public getByName(correlationId: string, name: string, callback: (err, item) => void): void {
+ *     let item = _.find(this._items, (d) => d.name == name);
+ *     callback(null, item);
+ *   }); 
+ * 
+ *   public set(correlatonId: string, item: MyData, callback: (err) => void): void {
+ *     this._items = _.filter(this._items, (d) => d.name != name);
+ *     this._items.push(item);
+ *     this.save(correlationId, callback);
+ *   }
+ * 
+ * }
  */
 export class FilePersistence<T> extends MemoryPersistence<T> implements IConfigurable {
     protected readonly _persister: JsonFilePersister<T>;
 
     /**
-     * Creates a new FilePersistence.
+     * Creates a new instance of the persistence.
      * 
-     * @param persister     the JsonFilePersister to use for loading and saving 
-     *                      JSON data to a file.
+     * @param persister    (optional) a persister component that loads and saves data from/to flat file.
      */
     public constructor(persister?: JsonFilePersister<T>) {
         if (persister == null)
@@ -35,13 +63,9 @@ export class FilePersistence<T> extends MemoryPersistence<T> implements IConfigu
     }
 
     /**
-     * Configures the path to the target file, with which this object's [[JsonFilePersister]] 
-     * will be working.
+     * Configures component by passing configuration parameters.
      * 
-     * @param config    ConfigParams, containing a "path" item.
-     * 
-     * @see [[JsonFilePersister.configure]]
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]] (in the PipServices "Commons" package)
+     * @param config    configuration parameters to be set.
      */
     public configure(config: ConfigParams): void {
         this._persister.configure(config);
