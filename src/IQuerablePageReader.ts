@@ -4,32 +4,17 @@ import { PagingParams } from 'pip-services-commons-node';
 import { SortParams } from 'pip-services-commons-node';
 
 /**
- * Interface for retrieving pages from a data source using a query.
- * 
- * ### Examples ###
- * 
- *     export class MyQuerablePageReader<T> implements IQuerablePageReader<T> {
- *         public getPageByQuery(correlation_id: string, query: string, paging: PagingParams, 
- *                 sort: SortParams, callback: (err: any, page: DataPage<T>) => void): void {
- *             ...
- *         }
- *     }
+ * Interface for data processing components that can query a page of data items.
  */
 export interface IQuerablePageReader<T> {
     /**
-     * Abstract method that will contain the logic for retrieving DataPages from a data source 
-     * in accordance with the given query and parameters.
+     * Gets a page of data items using a query string.
      * 
-     * @param correlation_id    unique business transaction id to trace calls across components.
-     * @param query             the query to retrieve pages by.
-     * @param paging            the paging parameters to use.
-     * @param sort              the sorting parameters to sort by.
-     * @param callback          the function to call with the retrieved pages 
-     *                          (or with an error, if one is raised).
-     * 
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.datapage.html DataPage]] (in the PipServices "Commons" package)
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.pagingparams.html PagingParams]] (in the PipServices "Commons" package)
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.sortparams.html SortParams]] (in the PipServices "Commons" package)
+     * @param correlation_id    (optional) transaction id to trace execution through call chain.
+     * @param query             (optional) a query string
+     * @param paging            (optional) paging parameters
+     * @param sort              (optional) sort parameters
+     * @param callback          callback function that receives list of items or error.
      */
     getPageByQuery(correlation_id: string, query: string, paging: PagingParams, sort: SortParams, 
         callback: (err: any, page: DataPage<T>) => void): void;

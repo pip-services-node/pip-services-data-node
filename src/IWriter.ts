@@ -2,58 +2,33 @@
 import { AnyValueMap } from 'pip-services-commons-node';
 
 /**
- * Interface for classes that need to perform create, update, and delete operations with items 
- * of type T. Item deletion is done by the object's ID, which is of type K.
- * 
- * @see [[IGetter]] (for a complete set of CRUD operations)
- * 
- * ### Examples ###
- * 
- *     export class MyWriter<T, K> implements IWriter<T, K> {
- *         public create(correlation_id: string, item: T, 
- *                 callback?: (err: any, item: T) => void): void {
- *             ...
- *         }
- * 
- *         public update(correlation_id: string, item: T, 
- *                 callback?: (err: any, item: T) => void): void {
- *             ...
- *         }
- * 
- *         public deleteById(correlation_id: string, id: K, 
- *                 callback?: (err: any, item: T) => void): void {
- *             ...
- *         }
- *     }
+ * Interface for data processing components that can create, update and delete data items.
  */
 export interface IWriter<T, K> {
     /**
-     * Abstract method that will contain the logic for creating records of an item.
+     * Creates a data item.
      * 
-     * @param correlation_id    unique business transaction id to trace calls across components.
-     * @param item              the item to create a record of.
-     * @param callback          (optional) the function to call with the created record 
-     *                          (or with an error, if one is raised).
+     * @param correlation_id    (optional) transaction id to trace execution through call chain.
+     * @param item              an item to be created.
+     * @param callback          (optional) callback function that receives created item or error.
      */
     create(correlation_id: string, item: T, callback?: (err: any, item: T) => void): void;
 
     /**
-     * Abstract method that will contain the logic for updating records of items.
+     * Updates a data item.
      * 
-     * @param correlation_id    unique business transaction id to trace calls across components.
-     * @param item              the item to update.
-     * @param callback          (optional) the function to call with the updated item 
-     *                          (or with an error, if one is raised).
+     * @param correlation_id    (optional) transaction id to trace execution through call chain.
+     * @param item              an item to be updated.
+     * @param callback          (optional) callback function that receives updated item or error.
      */
     update(correlation_id: string, item: T, callback?: (err: any, item: T) => void): void;
 
     /**
-     * Abstract method that will contain the logic for deleting items of type T by their type K keys.
+     * Deleted a data item by it's unique id.
      * 
-     * @param correlation_id    unique business transaction id to trace calls across components.
-     * @param id                the id of the item that is to be deleted.
-     * @param callback          (optional) the function to call with the deleted item 
-     *                          (or with an error, if one is raised).
+     * @param correlation_id    (optional) transaction id to trace execution through call chain.
+     * @param id                an id of the item to be deleted
+     * @param callback          (optional) callback function that receives deleted item or error.
      */
     deleteById(correlation_id: string, id: K, callback?: (err: any, item: T) => void): void;
 }

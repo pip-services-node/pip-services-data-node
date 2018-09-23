@@ -60,7 +60,7 @@ export class MemoryPersistence<T> implements IReferenceable, IOpenable, ICleanab
     /**
      * Opens this MemoryPersistence by attempting to load its items to memory.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
      * @param callback          (optional) the function to call once the opening process is complete.
      *                          Will be called with an error if one is raised.
      */
@@ -89,7 +89,7 @@ export class MemoryPersistence<T> implements IReferenceable, IOpenable, ICleanab
     /**
      * Closes this MemoryPersistence by attempting to save its items to memory.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
      * @param callback          (optional) the function to call once the closing process is complete.
      *                          Will be called with an error if one is raised.
      */
@@ -104,7 +104,7 @@ export class MemoryPersistence<T> implements IReferenceable, IOpenable, ICleanab
     /**
      * Saves the items stored by this MemoryPersistence to a data source.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
      * @param callback          (optional) the function to call once the saving process is complete.
      *                          Will be called with an error if one is raised.
      */
@@ -126,7 +126,7 @@ export class MemoryPersistence<T> implements IReferenceable, IOpenable, ICleanab
      * Clears this MemoryPersistence by removing all of its items from memory and calling the 
      * [[save]] method.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
      * @param callback          (optional) the function to call once the clearing process is complete. 
      *                          Will be called with an error if one is raised.
      * 

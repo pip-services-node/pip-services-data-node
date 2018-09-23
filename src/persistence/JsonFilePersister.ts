@@ -60,7 +60,7 @@ export class JsonFilePersister<T> implements ILoader<T>, ISaver<T>, IConfigurabl
     /**
      * Loads the JSON data that is stored in this JsonFilePersister's target file.
      * 
-     * @param correlation_id    unique business transaction id to trace calls across components.
+     * @param correlation_id    (optional) transaction id to trace execution through call chain.
      * @param callback          the function to call with the loaded data 
      *                          (or with an error, if one is raised).
      */
@@ -92,7 +92,7 @@ export class JsonFilePersister<T> implements ILoader<T>, ISaver<T>, IConfigurabl
     /**
      * Saves the given entities as JSON data to this JsonFilePersister's target file.
      * 
-     * @param correlation_id    unique business transaction id to trace calls across components.
+     * @param correlation_id    (optional) transaction id to trace execution through call chain.
      * @param entities          the entities to save.
      * @param callback          the function to call once the saving process is complete. 
      *                          Will be called with an error if one is raised.

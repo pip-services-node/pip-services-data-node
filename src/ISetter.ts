@@ -1,29 +1,16 @@
 /** @module core */
+
 /**
- * Interface for classes that need to set items of type T in their objects.
- * 
- * ### Examples ###
- * 
- *     export class MySetter<T> implements ISetter<T> {
- *         public set(correlation_id: string, item: T, 
- *                 callback?: (err: any, item: T) => void): void {
- *             ...
- *         }
- *     }
+ * Interface for data processing components that can set (create or update) data items.
  */
 export interface ISetter<T> {
     /**
-     * Abstract method that will contain the logic for setting the given item in the object for
-     * which it was called.
+     * Sets a data item. If the data item exists it updates it,
+     * otherwise it create a new data item.
      * 
-     * Items are usually set in the following way:
-     * - if no objects exist with the item's ID, then the item will simply be added. 
-     * - if one does exist, then it will be overwritten by the item that was passed to the method.
-     * 
-     * @param correlation_id    unique business transaction id to trace calls across components.
-     * @param item              the item to set.
-     * @param callback          (optional) the function to call with the item that was set 
-     *                          (or with an error, if one is raised).
+     * @param correlation_id    (optional) transaction id to trace execution through call chain.
+     * @param item              a item to be set.
+     * @param callback          (optional) callback function that receives updated item or error.
      */
     set(correlation_id: string, item: T, callback?: (err: any, item: T) => void): void;
 }

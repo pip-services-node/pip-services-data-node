@@ -1,24 +1,14 @@
 /** @module core */
+
 /**
- * Interface for classes that need to load items of type T from a data source.
- * 
- * @see [[ISaver]]
- * 
- * ### Examples ###
- * 
- *     export class MyLoader<T> implements ILoader<T> {
- *         public load(correlation_id: string, callback: (err: any, items: T[]) => void):void{
- *             ...
- *         }
- *     }
+ * Interface for data processing components that load data items.
  */
 export interface ILoader<T> {
     /**
-     * Abstract method that will contain the logic for loading items from a data source.
+     * Loads data items.
      * 
-     * @param correlation_id    unique business transaction id to trace calls across components. 
-     * @param callback          the function to call with the loaded items
-     *                          (or with an error, if one is raised).
+     * @param correlation_id    (optional) transaction id to trace execution through call chain. 
+     * @param callback          (optional) callback function that receives a list of data items or error.
      */
     load(correlation_id: string, callback: (err: any, items: T[]) => void): void;
 }

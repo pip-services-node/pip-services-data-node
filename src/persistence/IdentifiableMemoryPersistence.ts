@@ -83,7 +83,7 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
     /**
      * Retrieves DataPages from this IdentifiableMemoryPersistence in accordance with the given parameters.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
      * @param filter            the filter parameters to filter by.
      * @param paging            the paging parameters to use.
      * @param sort              the sorting parameters to sort by.
@@ -130,7 +130,7 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
     /**
      * Retrieves a list of items in accordance with the given parameters.
      * 
-     * @param correlationId    unique business transaction id to trace calls across components.
+     * @param correlationId    (optional) transaction id to trace execution through call chain.
      * @param filter            the filter parameters to filter by.
      * @param sort              the sorting parameters to sort by.
      * @param select            not used.
@@ -161,7 +161,7 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
     /**
      * Retrieves the items with the given IDs. 
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
      * @param ids               the ids of the items to retrieve.
      * @param callback          the function to call with the retrieved list of items 
      *                          (or with an error, if one is raised).
@@ -177,7 +177,7 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
     /**
      * Retrieves a random item from the ones that are stored. 
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
      * @param filter            the filtering function to filter the result by.
      * @param callback          the function to call with the randomly retrieved item 
      *                          (or with an error, if one is raised).
@@ -202,7 +202,7 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
     /**
      * Retrieves an item by its ID. 
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
      * @param id                the id of the item to retrieve.
      * @param callback          the function to call with the retrieved item 
      *                          (or with an error, if one is raised).
@@ -222,7 +222,7 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
     /**
      * Creates a new record of the given item and [[save saves]] it.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
      * @param item              the item to create a record of.
      * @param callback          (optional) the function to call with the created record 
      *                          (or with an error, if one is raised).
@@ -247,7 +247,7 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
      * ID, then the item will simply be added. If one does exist, then it will be 
      * overwritten by the item that was passed to this method.
      * 
-     * @param correlationId    unique business transaction id to trace calls across components.
+     * @param correlationId    (optional) transaction id to trace execution through call chain.
      * @param item              the item to set.
      * @param callback          (optional) the function to call with the item that was set 
      *                          (or with an error, if one is raised).
@@ -272,7 +272,7 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
     /**
      * Updates the record of the given item.
      * 
-     * @param correlationId    unique business transaction id to trace calls across components.
+     * @param correlationId    (optional) transaction id to trace execution through call chain.
      * @param item              the item to update.
      * @param callback          (optional) the function to call with the updated item 
      *                          (or with an error, if one is raised).
@@ -298,7 +298,7 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
     /**
      * Performes a partial update for the record with the given ID.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
      * @param id                the id of the item that is to be updated (partially).
      * @param data              the map of items to update in the record.
      * @param callback          (optional) the function to call with the updated item 
@@ -330,7 +330,7 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
     /**
      * Deletes the item with the given ID.
      * 
-     * @param correlationId    unique business transaction id to trace calls across components.
+     * @param correlationId    (optional) transaction id to trace execution through call chain.
      * @param id                the id of the item that is to be deleted.
      * @param callback          (optional) the function to call with the deleted item 
      *                          (or with an error, if one is raised).
@@ -356,7 +356,7 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
     /**
      * Deletes items that match the given filter.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
      * @param filter            the filter function to delete items by.
      * @param callback          (optional) the function to call with an error (if one is raised).
      */
@@ -385,7 +385,7 @@ export class IdentifiableMemoryPersistence<T extends IIdentifiable<K>, K> extend
     /**
      * Deletes multiple items by their provided IDs.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
      * @param ids               the ids of the items that are to be deleted.
      * @param callback          (optional) the function to call with an error (if one is raised).
      */
