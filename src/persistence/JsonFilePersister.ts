@@ -23,14 +23,14 @@ import { ISaver } from '../ISaver';
  * 
  * ### Example ###
  * 
- * let persister = new JsonFilePersister("./data/data.json");
- * 
- * persister.save("123", ["A", "B", "C"], (err) => {
- *     ...
- *     persister.load("123", (err, items) => {
- *         console.log(items);                      // Result: ["A", "B", "C"]
+ *     let persister = new JsonFilePersister("./data/data.json");
+ *     
+ *     persister.save("123", ["A", "B", "C"], (err) => {
+ *         ...
+ *         persister.load("123", (err, items) => {
+ *             console.log(items);                      // Result: ["A", "B", "C"]
+ *         });
  *     });
- * });
  */
 export class JsonFilePersister<T> implements ILoader<T>, ISaver<T>, IConfigurable {
     private _path: string;
