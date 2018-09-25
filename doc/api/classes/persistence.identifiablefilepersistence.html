@@ -70,24 +70,74 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Stores <a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html" class="external">identifiable</a>
-							items of type T in a JSON file and provides methods for working with the data
-						that is stored.</p>
+						<p>Abstract persistence component that stores data in flat files
+							and implements a number of CRUD operations over data items with unique ids.
+						The data items must implement IIdentifiable interface.</p>
 					</div>
-					<p>An IdentifiableFilePersistence&#39;s target file path can be configured by passing ConfigParams
-						with a &quot;path&quot; parameter to this class&#39;s <a href="persistence.identifiablefilepersistence.html#configure">configure</a> method. Additionally, the
-						max page size can be configured by passing ConfigParams with a &quot;options.max_page_size&quot;
-					parameter.</p>
+					<p>In basic scenarios child classes shall only override <a href="persistence.identifiablefilepersistence.html#getpagebyfilter">getPageByFilter</a>,
+						<a href="persistence.identifiablefilepersistence.html#getlistbyfilter">getListByFilter</a> or <a href="persistence.identifiablefilepersistence.html#deletebyfilter">deleteByFilter</a> operations with specific filter function.
+					All other operations can be used out of the box.</p>
+					<p>In complex scenarios child classes can implement additional operations by
+						accessing cached items via this._items property and calling <a href="persistence.identifiablefilepersistence.html#save">save</a> method
+					on updates.</p>
 					<dl class="tsd-comment-tags">
 						<dt>see</dt>
 						<dd><p><a href="persistence.jsonfilepersister.html">JsonFilePersister</a></p>
 						</dd>
 						<dt>see</dt>
 						<dd><p><a href="persistence.memorypersistence.html">MemoryPersistence</a></p>
-						</dd>
-						<dt>see</dt>
-						<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html" class="external">IIdentifiable</a> (in the PipServices &quot;Commons&quot; package)</p>
-						</dd>
+							<h3 id="configuration-parameters">Configuration parameters</h3>
+							<ul>
+								<li>path:                    path to the file where data is stored</li>
+								<li>options:<ul>
+										<li>max_page_size:       Maximum number of items returned in a single page (default: 100)</li>
+									</ul>
+								</li>
+							</ul>
+							<h3 id="references">References</h3>
+							<ul>
+								<li><code>*:logger:*:*:1.0</code>       (optional) [[ILogger]] components to pass log messages</li>
+							</ul>
+							<h3 id="examples">Examples</h3>
+							<pre><code><span class="hljs-keyword">class</span> MyFilePersistence <span class="hljs-keyword">extends</span> IdentifiableFilePersistence&lt;MyData, <span class="hljs-built_in">string</span>&gt; {
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">constructor</span>(<span class="hljs-params">path?: <span class="hljs-built_in">string</span></span>) {
+        <span class="hljs-keyword">super</span>(<span class="hljs-keyword">new</span> JsonPersister(path));
+    }
+
+    <span class="hljs-keyword">private</span> composeFilter(filter: FilterParams): <span class="hljs-built_in">any</span> {
+        filter = filter || <span class="hljs-keyword">new</span> FilterParams();
+        <span class="hljs-keyword">let</span> name = filter.getAsNullableString(<span class="hljs-string">"name"</span>);
+        <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">item</span>) =&gt;</span> {
+            <span class="hljs-keyword">if</span> (name != <span class="hljs-literal">null</span> &amp;&amp; item.name != name)
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        };
+    }
+
+    <span class="hljs-keyword">public</span> getPageByFilter(correlationId: <span class="hljs-built_in">string</span>, filter: FilterParams, paging: PagingParams,
+            callback: <span class="hljs-function">(<span class="hljs-params">err: <span class="hljs-built_in">any</span>, page: DataPage&lt;MyData&gt;</span>) =&gt;</span> <span class="hljs-built_in">void</span>): <span class="hljs-built_in">void</span> {
+        <span class="hljs-keyword">super</span>.getPageByFilter(correlationId, <span class="hljs-keyword">this</span>.composeFilter(filter), paging, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, callback);
+    }
+
+}
+
+<span class="hljs-keyword">let</span> persistence = <span class="hljs-keyword">new</span> MyFilePersistence(<span class="hljs-string">"./data/data.json"</span>);
+
+persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hljs-string">"1"</span>, name: <span class="hljs-string">"ABC"</span> }, <span class="hljs-function">(<span class="hljs-params">err, item</span>) =&gt;</span> {
+    persistence.getPageByFilter(
+        <span class="hljs-string">"123"</span>,
+        FilterParams.fromTuples(<span class="hljs-string">"name"</span>, <span class="hljs-string">"ABC"</span>),
+        <span class="hljs-literal">null</span>,
+        <span class="hljs-function">(<span class="hljs-params">err, page</span>) =&gt;</span> {
+            <span class="hljs-built_in">console</span>.log(page.data);          <span class="hljs-comment">// Result: { id: "1", name: "ABC" }</span>
+
+            persistence.deleteById(<span class="hljs-string">"123"</span>, <span class="hljs-string">"1"</span>, <span class="hljs-function">(<span class="hljs-params">err, item</span>) =&gt;</span> {
+                ...
+            });
+        }
+    )
+});
+</code></pre></dd>
 					</dl>
 				</div>
 			</section>
@@ -189,12 +239,12 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="persistence.identifiablememorypersistence.html">IdentifiableMemoryPersistence</a>.<a href="persistence.identifiablememorypersistence.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/IdentifiableFilePersistence.ts#L24">persistence/IdentifiableFilePersistence.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableFilePersistence.ts#L76">persistence/IdentifiableFilePersistence.ts:76</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a new IdentifiableFilePersistence.</p>
+									<p>Creates a new instance of the persistence.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -203,8 +253,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> persister: <a href="persistence.jsonfilepersister.html" class="tsd-signature-type">JsonFilePersister</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
-											<p>the JsonFilePersister to use for loading and saving
-											JSON data to a file.</p>
+											<p>(optional) a persister component that loads and saves data from/to flat file.</p>
 										</div>
 									</div>
 								</li>
@@ -223,7 +272,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#_items">_items</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/MemoryPersistence.ts#L22">persistence/MemoryPersistence.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L54">persistence/MemoryPersistence.ts:54</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -234,7 +283,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#_loader">_loader</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/MemoryPersistence.ts#L23">persistence/MemoryPersistence.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L55">persistence/MemoryPersistence.ts:55</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -245,7 +294,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#_logger">_logger</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/MemoryPersistence.ts#L21">persistence/MemoryPersistence.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L53">persistence/MemoryPersistence.ts:53</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -256,7 +305,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.identifiablememorypersistence.html">IdentifiableMemoryPersistence</a>.<a href="persistence.identifiablememorypersistence.html#_maxpagesize">_maxPageSize</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/IdentifiableMemoryPersistence.ts#L57">persistence/IdentifiableMemoryPersistence.ts:57</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L85">persistence/IdentifiableMemoryPersistence.ts:85</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -267,7 +316,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#_opened">_opened</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/MemoryPersistence.ts#L25">persistence/MemoryPersistence.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L57">persistence/MemoryPersistence.ts:57</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -277,7 +326,7 @@
 					<div class="tsd-signature tsd-kind-icon">_persister<span class="tsd-signature-symbol">:</span> <a href="persistence.jsonfilepersister.html" class="tsd-signature-type">JsonFilePersister</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/IdentifiableFilePersistence.ts#L24">persistence/IdentifiableFilePersistence.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableFilePersistence.ts#L76">persistence/IdentifiableFilePersistence.ts:76</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -288,7 +337,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#_saver">_saver</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/MemoryPersistence.ts#L24">persistence/MemoryPersistence.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L56">persistence/MemoryPersistence.ts:56</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -306,19 +355,13 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#clear">clear</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/MemoryPersistence.ts#L135">persistence/MemoryPersistence.ts:135</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L156">persistence/MemoryPersistence.ts:156</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Clears this MemoryPersistence by removing all of its items from memory and calling the
-									<a href="persistence.identifiablefilepersistence.html#save">save</a> method.</p>
+									<p>Clears component state.</p>
 								</div>
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p><a href="persistence.identifiablefilepersistence.html#save">save</a></p>
-									</dd>
-								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -331,8 +374,7 @@
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call once the clearing process is complete.
-										Will be called with an error if one is raised.</p>
+										<p>callback function that receives error or null no errors occured.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -369,12 +411,12 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#close">close</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/MemoryPersistence.ts#L96">persistence/MemoryPersistence.ts:96</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L122">persistence/MemoryPersistence.ts:122</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Closes this MemoryPersistence by attempting to save its items to memory.</p>
+									<p>Closes component and frees used resources.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -388,8 +430,7 @@
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call once the closing process is complete.
-										Will be called with an error if one is raised.</p>
+										<p>callback function that receives error or null no errors occured.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -426,32 +467,20 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="persistence.identifiablememorypersistence.html">IdentifiableMemoryPersistence</a>.<a href="persistence.identifiablememorypersistence.html#configure">configure</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/IdentifiableFilePersistence.ts#L51">persistence/IdentifiableFilePersistence.ts:51</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableFilePersistence.ts#L97">persistence/IdentifiableFilePersistence.ts:97</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Configures the path to the target file, with which this object&#39;s <a href="persistence.jsonfilepersister.html">JsonFilePersister</a>
-									will be working, as well as the max page size.</p>
+									<p>Configures component by passing configuration parameters.</p>
 								</div>
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p><a href="persistence.jsonfilepersister.html#configure">JsonFilePersister.configure</a></p>
-									</dd>
-									<dt>see</dt>
-									<dd><p><a href="persistence.identifiablememorypersistence.html#configure">IdentifiableMemoryPersistence.configure</a></p>
-									</dd>
-									<dt>see</dt>
-									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html" class="external">ConfigParams</a> (in the PipServices &quot;Commons&quot; package)</p>
-									</dd>
-								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>config: <span class="tsd-signature-type">ConfigParams</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>ConfigParams, containing a &quot;path&quot; and/or &quot;options.max_page_size&quot; item.</p>
+										<p>configuration parameters to be set.</p>
 									</div>
 								</li>
 							</ul>
@@ -470,38 +499,29 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.identifiablememorypersistence.html">IdentifiableMemoryPersistence</a>.<a href="persistence.identifiablememorypersistence.html#create">create</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/IdentifiableMemoryPersistence.ts#L232">persistence/IdentifiableMemoryPersistence.ts:232</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L249">persistence/IdentifiableMemoryPersistence.ts:249</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a new record of the given item and <a href="persistence.identifiablefilepersistence.html#save">saves</a> it.</p>
+									<p>Creates a data item.</p>
 								</div>
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p><a href="persistence.identifiablefilepersistence.html#save">save</a></p>
-									</dd>
-								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>(optional) transaction id to trace execution through call chain.</p>
-									</div>
 								</li>
 								<li>
 									<h5>item: <span class="tsd-signature-type">T</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the item to create a record of.</p>
+										<p>an item to be created.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call with the created record
-										(or with an error, if one is raised).</p>
+										<p>(optional) callback function that receives created item or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -541,13 +561,15 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.identifiablememorypersistence.html">IdentifiableMemoryPersistence</a>.<a href="persistence.identifiablememorypersistence.html#deletebyfilter">deleteByFilter</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/IdentifiableMemoryPersistence.ts#L363">persistence/IdentifiableMemoryPersistence.ts:363</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L376">persistence/IdentifiableMemoryPersistence.ts:376</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Deletes items that match the given filter.</p>
+									<p>Deletes data items that match to a given filter.</p>
 								</div>
+								<p>This method shall be called by a public deleteByFilter method from child class that
+								receives FilterParams and converts them into a filter function.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -560,13 +582,13 @@
 								<li>
 									<h5>filter: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the filter function to delete items by.</p>
+										<p>(optional) a filter function to filter items.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call with an error (if one is raised).</p>
+										<p>(optional) callback function that receives error or null for success.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -603,33 +625,29 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.identifiablememorypersistence.html">IdentifiableMemoryPersistence</a>.<a href="persistence.identifiablememorypersistence.html#deletebyid">deleteById</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/IdentifiableMemoryPersistence.ts#L338">persistence/IdentifiableMemoryPersistence.ts:338</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L348">persistence/IdentifiableMemoryPersistence.ts:348</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Deletes the item with the given ID.</p>
+									<p>Deleted a data item by it&#39;s unique id.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>(optional) transaction id to trace execution through call chain.</p>
-									</div>
 								</li>
 								<li>
 									<h5>id: <span class="tsd-signature-type">K</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the id of the item that is to be deleted.</p>
+										<p>an id of the item to be deleted</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call with the deleted item
-										(or with an error, if one is raised).</p>
+										<p>(optional) callback function that receives deleted item or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -669,12 +687,12 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.identifiablememorypersistence.html">IdentifiableMemoryPersistence</a>.<a href="persistence.identifiablememorypersistence.html#deletebyids">deleteByIds</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/IdentifiableMemoryPersistence.ts#L392">persistence/IdentifiableMemoryPersistence.ts:392</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L405">persistence/IdentifiableMemoryPersistence.ts:405</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Deletes multiple items by their provided IDs.</p>
+									<p>Deletes multiple data items by their unique ids.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -688,13 +706,13 @@
 								<li>
 									<h5>ids: <span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the ids of the items that are to be deleted.</p>
+										<p>ids of data items to be deleted.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call with an error (if one is raised).</p>
+										<p>(optional) callback function that receives error or null for success.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -731,21 +749,15 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.identifiablememorypersistence.html">IdentifiableMemoryPersistence</a>.<a href="persistence.identifiablememorypersistence.html#getlistbyfilter">getListByFilter</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/IdentifiableMemoryPersistence.ts#L143">persistence/IdentifiableMemoryPersistence.ts:143</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L163">persistence/IdentifiableMemoryPersistence.ts:163</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Retrieves a list of items in accordance with the given parameters.</p>
+									<p>Gets a list of data items retrieved by a given filter and sorted according to sort parameters.</p>
 								</div>
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.filterparams.html" class="external">FilterParams</a> (in the PipServices &quot;Commons&quot; package)</p>
-									</dd>
-									<dt>see</dt>
-									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.sortparams.html" class="external">SortParams</a> (in the PipServices &quot;Commons&quot; package)</p>
-									</dd>
-								</dl>
+								<p>This method shall be called by a public getListByFilter method from child class that
+								receives FilterParams and converts them into a filter function.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -758,26 +770,25 @@
 								<li>
 									<h5>filter: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the filter parameters to filter by.</p>
+										<p>(optional) a filter function to filter items</p>
 									</div>
 								</li>
 								<li>
 									<h5>sort: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the sorting parameters to sort by.</p>
+										<p>(optional) sorting parameters</p>
 									</div>
 								</li>
 								<li>
 									<h5>select: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>not used.</p>
+										<p>(optional) projection parameters (not used yet)</p>
 									</div>
 								</li>
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to call with the retrieved list of items
-										(or with an error, if one is raised).</p>
+										<p>callback function that receives a data list or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -817,12 +828,12 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.identifiablememorypersistence.html">IdentifiableMemoryPersistence</a>.<a href="persistence.identifiablememorypersistence.html#getlistbyids">getListByIds</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/IdentifiableMemoryPersistence.ts#L169">persistence/IdentifiableMemoryPersistence.ts:169</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L188">persistence/IdentifiableMemoryPersistence.ts:188</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Retrieves the items with the given IDs.</p>
+									<p>Gets a list of data items retrieved by given unique ids.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -836,14 +847,13 @@
 								<li>
 									<h5>ids: <span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the ids of the items to retrieve.</p>
+										<p>ids of data items to be retrieved</p>
 									</div>
 								</li>
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to call with the retrieved list of items
-										(or with an error, if one is raised).</p>
+										<p>callback function that receives a data list or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -883,12 +893,12 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.identifiablememorypersistence.html">IdentifiableMemoryPersistence</a>.<a href="persistence.identifiablememorypersistence.html#getonebyid">getOneById</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/IdentifiableMemoryPersistence.ts#L210">persistence/IdentifiableMemoryPersistence.ts:210</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L230">persistence/IdentifiableMemoryPersistence.ts:230</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Retrieves an item by its ID.</p>
+									<p>Gets a data item by its unique id.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -902,14 +912,13 @@
 								<li>
 									<h5>id: <span class="tsd-signature-type">K</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the id of the item to retrieve.</p>
+										<p>an id of data item to be retrieved.</p>
 									</div>
 								</li>
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to call with the retrieved item
-										(or with an error, if one is raised).</p>
+										<p>callback function that receives data item or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -949,13 +958,15 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.identifiablememorypersistence.html">IdentifiableMemoryPersistence</a>.<a href="persistence.identifiablememorypersistence.html#getonerandom">getOneRandom</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/IdentifiableMemoryPersistence.ts#L185">persistence/IdentifiableMemoryPersistence.ts:185</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L206">persistence/IdentifiableMemoryPersistence.ts:206</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Retrieves a random item from the ones that are stored.</p>
+									<p>Gets a random item from items that match to a given filter.</p>
 								</div>
+								<p>This method shall be called by a public getOneRandom method from child class that
+								receives FilterParams and converts them into a filter function.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -968,14 +979,13 @@
 								<li>
 									<h5>filter: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the filtering function to filter the result by.</p>
+										<p>(optional) a filter function to filter items.</p>
 									</div>
 								</li>
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to call with the randomly retrieved item
-										(or with an error, if one is raised).</p>
+										<p>callback function that receives a random item or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -1015,27 +1025,15 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.identifiablememorypersistence.html">IdentifiableMemoryPersistence</a>.<a href="persistence.identifiablememorypersistence.html#getpagebyfilter">getPageByFilter</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/IdentifiableMemoryPersistence.ts#L99">persistence/IdentifiableMemoryPersistence.ts:99</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L119">persistence/IdentifiableMemoryPersistence.ts:119</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Retrieves DataPages from this IdentifiableMemoryPersistence in accordance with the given parameters.</p>
+									<p>Gets a page of data items retrieved by a given filter and sorted according to sort parameters.</p>
 								</div>
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.datapage.html" class="external">DataPage</a> (in the PipServices &quot;Commons&quot; package)</p>
-									</dd>
-									<dt>see</dt>
-									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.filterparams.html" class="external">FilterParams</a> (in the PipServices &quot;Commons&quot; package)</p>
-									</dd>
-									<dt>see</dt>
-									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.pagingparams.html" class="external">PagingParams</a> (in the PipServices &quot;Commons&quot; package)</p>
-									</dd>
-									<dt>see</dt>
-									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.sortparams.html" class="external">SortParams</a> (in the PipServices &quot;Commons&quot; package)</p>
-									</dd>
-								</dl>
+								<p>This method shall be called by a public getPageByFilter method from child class that
+								receives FilterParams and converts them into a filter function.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -1048,32 +1046,31 @@
 								<li>
 									<h5>filter: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the filter parameters to filter by.</p>
+										<p>(optional) a filter function to filter items</p>
 									</div>
 								</li>
 								<li>
 									<h5>paging: <span class="tsd-signature-type">PagingParams</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the paging parameters to use.</p>
+										<p>(optional) paging parameters</p>
 									</div>
 								</li>
 								<li>
 									<h5>sort: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the sorting parameters to sort by.</p>
+										<p>(optional) sorting parameters</p>
 									</div>
 								</li>
 								<li>
 									<h5>select: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>not used.</p>
+										<p>(optional) projection parameters (not used yet)</p>
 									</div>
 								</li>
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to call with the retrieved pages
-										(or with an error, if one is raised).</p>
+										<p>callback function that receives a data page or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -1113,18 +1110,16 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#isopen">isOpen</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/MemoryPersistence.ts#L56">persistence/MemoryPersistence.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L84">persistence/MemoryPersistence.ts:84</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p><a href="persistence.identifiablefilepersistence.html#open">open</a></p>
-									</dd>
-								</dl>
+								<div class="lead">
+									<p>Checks if the component is opened.</p>
+								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-							<p>whether or not this MemoryPersistence&#39;s items have been loaded to memory.</p>
+							<p>true if the component has been opened and false otherwise.</p>
 						</li>
 					</ul>
 				</section>
@@ -1139,12 +1134,12 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#open">open</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/MemoryPersistence.ts#L67">persistence/MemoryPersistence.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L94">persistence/MemoryPersistence.ts:94</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Opens this MemoryPersistence by attempting to load its items to memory.</p>
+									<p>Opens the component.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1158,8 +1153,7 @@
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call once the opening process is complete.
-										Will be called with an error if one is raised.</p>
+										<p>callback function that receives error or null no errors occured.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -1196,12 +1190,12 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#save">save</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/MemoryPersistence.ts#L111">persistence/MemoryPersistence.ts:111</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L136">persistence/MemoryPersistence.ts:136</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Saves the items stored by this MemoryPersistence to a data source.</p>
+									<p>Saves items to external data source using configured saver component.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1215,8 +1209,7 @@
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call once the saving process is complete.
-										Will be called with an error if one is raised.</p>
+										<p>(optional) callback function that receives error or null for success.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -1253,35 +1246,30 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.identifiablememorypersistence.html">IdentifiableMemoryPersistence</a>.<a href="persistence.identifiablememorypersistence.html#set">set</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/IdentifiableMemoryPersistence.ts#L255">persistence/IdentifiableMemoryPersistence.ts:255</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L270">persistence/IdentifiableMemoryPersistence.ts:270</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Sets the given item in this IdentifiableMemoryPersistence. If no objects exist with the item&#39;s
-										ID, then the item will simply be added. If one does exist, then it will be
-									overwritten by the item that was passed to this method.</p>
+									<p>Sets a data item. If the data item exists it updates it,
+									otherwise it create a new data item.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>(optional) transaction id to trace execution through call chain.</p>
-									</div>
 								</li>
 								<li>
 									<h5>item: <span class="tsd-signature-type">T</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the item to set.</p>
+										<p>a item to be set.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call with the item that was set
-										(or with an error, if one is raised).</p>
+										<p>(optional) callback function that receives updated item or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -1321,29 +1309,20 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#setreferences">setReferences</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/MemoryPersistence.ts#L47">persistence/MemoryPersistence.ts:47</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L75">persistence/MemoryPersistence.ts:75</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Sets the source of this object&#39;s logger using the context-info reference that is
-									passed to this method.</p>
+									<p>Sets references to dependent components.</p>
 								</div>
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p>[[ContextInfo]]</p>
-									</dd>
-									<dt>see</dt>
-									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/refer.ireferences.html" class="external">IReferences</a> (in the PipServices &quot;Commons&quot; package)</p>
-									</dd>
-								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>references: <span class="tsd-signature-type">IReferences</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>an IReferences object, containing the &quot;context-info&quot; reference to set.</p>
+										<p>references to locate the component dependencies.</p>
 									</div>
 								</li>
 							</ul>
@@ -1362,33 +1341,29 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.identifiablememorypersistence.html">IdentifiableMemoryPersistence</a>.<a href="persistence.identifiablememorypersistence.html#update">update</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/IdentifiableMemoryPersistence.ts#L280">persistence/IdentifiableMemoryPersistence.ts:280</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L294">persistence/IdentifiableMemoryPersistence.ts:294</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Updates the record of the given item.</p>
+									<p>Updates a data item.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>(optional) transaction id to trace execution through call chain.</p>
-									</div>
 								</li>
 								<li>
 									<h5>item: <span class="tsd-signature-type">T</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the item to update.</p>
+										<p>an item to be updated.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call with the updated item
-										(or with an error, if one is raised).</p>
+										<p>(optional) callback function that receives updated item or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -1428,44 +1403,35 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.identifiablememorypersistence.html">IdentifiableMemoryPersistence</a>.<a href="persistence.identifiablememorypersistence.html#updatepartially">updatePartially</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/persistence/IdentifiableMemoryPersistence.ts#L309">persistence/IdentifiableMemoryPersistence.ts:309</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L320">persistence/IdentifiableMemoryPersistence.ts:320</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Performes a partial update for the record with the given ID.</p>
+									<p>Updates only few selected fields in a data item.</p>
 								</div>
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.anyvaluemap.html" class="external">AnyValueMap</a></p>
-									</dd>
-								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>(optional) transaction id to trace execution through call chain.</p>
-									</div>
 								</li>
 								<li>
 									<h5>id: <span class="tsd-signature-type">K</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the id of the item that is to be updated (partially).</p>
+										<p>an id of data item to be updated.</p>
 									</div>
 								</li>
 								<li>
 									<h5>data: <span class="tsd-signature-type">AnyValueMap</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the map of items to update in the record.</p>
+										<p>a map with fields to be updated.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call with the updated item
-										(or with an error, if one is raised).</p>
+										<p>callback function that receives updated item or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">

@@ -70,31 +70,8 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Interface for classes that need to perform create, update, and delete operations with items
-						of type T. Item deletion is done by the object&#39;s ID, which is of type K.</p>
+						<p>Interface for data processing components that can create, update and delete data items.</p>
 					</div>
-					<dl class="tsd-comment-tags">
-						<dt>see</dt>
-						<dd><p><a href="core.igetter.html">IGetter</a> (for a complete set of CRUD operations)</p>
-							<h3 id="examples">Examples</h3>
-							<pre><code>export <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyWriter</span>&lt;<span class="hljs-title">T</span>, <span class="hljs-title">K</span>&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title">IWriter</span>&lt;<span class="hljs-title">T</span>, <span class="hljs-title">K</span>&gt; {</span>
-    <span class="hljs-keyword">public</span> create(<span class="hljs-string">correlation_id:</span> string, <span class="hljs-string">item:</span> T,
-            callback?: (<span class="hljs-string">err:</span> any, <span class="hljs-string">item:</span> T) =&gt; <span class="hljs-keyword">void</span>): <span class="hljs-keyword">void</span> {
-        ...
-    }
-
-    <span class="hljs-keyword">public</span> update(<span class="hljs-string">correlation_id:</span> string, <span class="hljs-string">item:</span> T,
-            callback?: (<span class="hljs-string">err:</span> any, <span class="hljs-string">item:</span> T) =&gt; <span class="hljs-keyword">void</span>): <span class="hljs-keyword">void</span> {
-        ...
-    }
-
-    <span class="hljs-keyword">public</span> deleteById(<span class="hljs-string">correlation_id:</span> string, <span class="hljs-string">id:</span> K,
-            callback?: (<span class="hljs-string">err:</span> any, <span class="hljs-string">item:</span> T) =&gt; <span class="hljs-keyword">void</span>): <span class="hljs-keyword">void</span> {
-        ...
-    }
-}
-</code></pre></dd>
-					</dl>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
@@ -150,12 +127,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/IWriter.ts#L38">IWriter.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/IWriter.ts#L15">IWriter.ts:15</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Abstract method that will contain the logic for creating records of an item.</p>
+									<p>Creates a data item.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -169,14 +146,13 @@
 								<li>
 									<h5>item: <span class="tsd-signature-type">T</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the item to create a record of.</p>
+										<p>an item to be created.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call with the created record
-										(or with an error, if one is raised).</p>
+										<p>(optional) callback function that receives created item or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -215,12 +191,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/IWriter.ts#L58">IWriter.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/IWriter.ts#L33">IWriter.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Abstract method that will contain the logic for deleting items of type T by their type K keys.</p>
+									<p>Deleted a data item by it&#39;s unique id.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -234,14 +210,13 @@
 								<li>
 									<h5>id: <span class="tsd-signature-type">K</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the id of the item that is to be deleted.</p>
+										<p>an id of the item to be deleted</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call with the deleted item
-										(or with an error, if one is raised).</p>
+										<p>(optional) callback function that receives deleted item or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -280,12 +255,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/IWriter.ts#L48">IWriter.ts:48</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/IWriter.ts#L24">IWriter.ts:24</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Abstract method that will contain the logic for updating records of items.</p>
+									<p>Updates a data item.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -299,14 +274,13 @@
 								<li>
 									<h5>item: <span class="tsd-signature-type">T</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the item to update.</p>
+										<p>an item to be updated.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call with the updated item
-										(or with an error, if one is raised).</p>
+										<p>(optional) callback function that receives updated item or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">

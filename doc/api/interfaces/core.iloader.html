@@ -70,19 +70,8 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Interface for classes that need to load items of type T from a data source.</p>
+						<p>Interface for data processing components that load data items.</p>
 					</div>
-					<dl class="tsd-comment-tags">
-						<dt>see</dt>
-						<dd><p><a href="core.isaver.html">ISaver</a></p>
-							<h3 id="examples">Examples</h3>
-							<pre><code>export <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyLoader</span>&lt;<span class="hljs-title">T</span>&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title">ILoader</span>&lt;<span class="hljs-title">T</span>&gt; {</span>
-    <span class="hljs-keyword">public</span> load(<span class="hljs-string">correlation_id:</span> string, <span class="hljs-string">callback:</span> (<span class="hljs-string">err:</span> any, <span class="hljs-string">items:</span> T[]) =&gt; <span class="hljs-keyword">void</span>):<span class="hljs-keyword">void</span>{
-        ...
-    }
-}
-</code></pre></dd>
-					</dl>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
@@ -132,12 +121,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/ILoader.ts#L23">ILoader.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/ILoader.ts#L13">ILoader.ts:13</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Abstract method that will contain the logic for loading items from a data source.</p>
+									<p>Loads data items.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -151,8 +140,7 @@
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to call with the loaded items
-										(or with an error, if one is raised).</p>
+										<p>(optional) callback function that receives a list of data items or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">

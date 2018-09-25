@@ -70,24 +70,8 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Interface for retrieving <a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html" class="external">identifiable</a>
-						items of type T by their IDs (which are of type K).</p>
+						<p>Interface for data processing components that can get data items.</p>
 					</div>
-					<dl class="tsd-comment-tags">
-						<dt>see</dt>
-						<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html" class="external">IIdentifiable</a></p>
-						</dd>
-						<dt>see</dt>
-						<dd><p>[IWriter] (for a complete set of CRUD operations)</p>
-							<h3 id="examples">Examples</h3>
-							<pre><code>export <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyGetter</span>&lt;<span class="hljs-title">T</span>&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title">IGetter</span>&lt;<span class="hljs-title">T</span>&gt; {</span>
-    <span class="hljs-keyword">public</span> getOneById(<span class="hljs-string">correlation_id:</span> string, <span class="hljs-string">id:</span> K,
-<span class="hljs-symbol">            callback:</span> (<span class="hljs-string">err:</span> any, <span class="hljs-string">item:</span> T) =&gt; <span class="hljs-keyword">void</span>): <span class="hljs-keyword">void</span> {
-        ...
-    }
-}
-</code></pre></dd>
-					</dl>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
@@ -141,12 +125,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/IGetter.ts#L30">IGetter.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/IGetter.ts#L15">IGetter.ts:15</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Abstract method that will contain the logic for retrieving an item by the given ID.</p>
+									<p>Gets a data items by its unique id.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -160,14 +144,13 @@
 								<li>
 									<h5>id: <span class="tsd-signature-type">K</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the id of the item that is to be retrieved.</p>
+										<p>an id of item to be retrieved.</p>
 									</div>
 								</li>
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to call with the retrieved item
-										(or with an error, if one is raised).</p>
+										<p>callback function that receives an item or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">

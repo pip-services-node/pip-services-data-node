@@ -70,16 +70,8 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Interface for classes that need to set items of type T in their objects.</p>
+						<p>Interface for data processing components that can set (create or update) data items.</p>
 					</div>
-					<h3 id="examples">Examples</h3>
-					<pre><code>export <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MySetter</span>&lt;<span class="hljs-title">T</span>&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title">ISetter</span>&lt;<span class="hljs-title">T</span>&gt; {</span>
-    <span class="hljs-keyword">public</span> set(<span class="hljs-string">correlation_id:</span> string, <span class="hljs-string">item:</span> T,
-            callback?: (<span class="hljs-string">err:</span> any, <span class="hljs-string">item:</span> T) =&gt; <span class="hljs-keyword">void</span>): <span class="hljs-keyword">void</span> {
-        ...
-    }
-}
-</code></pre>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
@@ -130,19 +122,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/1fcd98c/src/ISetter.ts#L28">ISetter.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/ISetter.ts#L15">ISetter.ts:15</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Abstract method that will contain the logic for setting the given item in the object for
-									which it was called.</p>
+									<p>Sets a data item. If the data item exists it updates it,
+									otherwise it create a new data item.</p>
 								</div>
-								<p>Items are usually set in the following way:</p>
-								<ul>
-									<li>if no objects exist with the item&#39;s ID, then the item will simply be added.</li>
-									<li>if one does exist, then it will be overwritten by the item that was passed to the method.</li>
-								</ul>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -155,14 +142,13 @@
 								<li>
 									<h5>item: <span class="tsd-signature-type">T</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the item to set.</p>
+										<p>a item to be set.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call with the item that was set
-										(or with an error, if one is raised).</p>
+										<p>(optional) callback function that receives updated item or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
