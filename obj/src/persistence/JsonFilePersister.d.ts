@@ -5,7 +5,7 @@ import { ISaver } from '../ISaver';
 /**
  * Persistence component that loads and saves data from/to flat file.
  *
- * It is used by FilePersistence, but can be useful on its own.
+ * It is used by [[FilePersistence]], but can be useful on its own.
  *
  * ### Configuration parameters ###
  *
@@ -13,14 +13,14 @@ import { ISaver } from '../ISaver';
  *
  * ### Example ###
  *
- * let persister = new JsonFilePersister("./data/data.json");
+ *     let persister = new JsonFilePersister("./data/data.json");
  *
- * persister.save("123", ["A", "B", "C"], (err) => {
- *     ...
- *     persister.load("123", (err, items) => {
- *         console.log(items);                      // Result: ["A", "B", "C"]
+ *     persister.save("123", ["A", "B", "C"], (err) => {
+ *         ...
+ *         persister.load("123", (err, items) => {
+ *             console.log(items);                      // Result: ["A", "B", "C"]
+ *         });
  *     });
- * });
  */
 export declare class JsonFilePersister<T> implements ILoader<T>, ISaver<T>, IConfigurable {
     private _path;

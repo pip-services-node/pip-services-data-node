@@ -12,7 +12,7 @@ import { ISaver } from '../ISaver';
  * This is the most basic persistence component that is only
  * able to store data items of any type. Specific CRUD operations
  * over the data items must be implemented in child classes by
- * accessing this._items property and calling [[save]] method.
+ * accessing <code>this._items</code> property and calling [[save]] method.
  *
  * The component supports loading and saving items from another data source.
  * That allows to use it as a base class for file and other types
@@ -20,32 +20,32 @@ import { ISaver } from '../ISaver';
  *
  * ### References ###
  *
- * - *:logger:*:*:1.0         (optional) [[ILogger]] components to pass log messages
+ * - <code>\*:logger:\*:\*:1.0</code>       (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/log.ilogger.html ILogger]] components to pass log messages
  *
  * ### Example ###
  *
- * class MyMemoryPersistence extends MemoryPersistence<MyData> {
+ *     class MyMemoryPersistence extends MemoryPersistence<MyData> {
  *
- *   public getByName(correlationId: string, name: string, callback: (err, item) => void): void {
- *     let item = _.find(this._items, (d) => d.name == name);
- *     callback(null, item);
- *   });
+ *         public getByName(correlationId: string, name: string, callback: (err, item) => void): void {
+ *             let item = _.find(this._items, (d) => d.name == name);
+ *             callback(null, item);
+ *         });
  *
- *   public set(correlatonId: string, item: MyData, callback: (err) => void): void {
- *     this._items = _.filter(this._items, (d) => d.name != name);
- *     this._items.push(item);
- *     this.save(correlationId, callback);
- *   }
+ *         public set(correlatonId: string, item: MyData, callback: (err) => void): void {
+ *             this._items = _.filter(this._items, (d) => d.name != name);
+ *             this._items.push(item);
+ *             this.save(correlationId, callback);
+ *         }
  *
- * }
+ *     }
  *
- * let persistence = new MyMemoryPersistence();
+ *     let persistence = new MyMemoryPersistence();
  *
- * persistence.set("123", { name: "ABC" }, (err) => {
- *     persistence.getByName("123", "ABC", (err, item) => {
- *         console.log(item);                   // Result: { name: "ABC" }
+ *     persistence.set("123", { name: "ABC" }, (err) => {
+ *         persistence.getByName("123", "ABC", (err, item) => {
+ *             console.log(item);                   // Result: { name: "ABC" }
+ *         });
  *     });
- * });
  */
 export declare class MemoryPersistence<T> implements IReferenceable, IOpenable, ICleanable {
     protected _logger: CompositeLogger;

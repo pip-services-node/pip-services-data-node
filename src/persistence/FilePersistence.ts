@@ -15,7 +15,7 @@ import { MemoryPersistence } from './MemoryPersistence';
  * accessing this._items property and calling [[save]] method.
  * 
  * @see [[MemoryPersistence]]
- * @see [[JsonPersister]]
+ * @see [[JsonFilePersister]]
  * 
  * ### Configuration parameters ###
  * 
@@ -23,7 +23,7 @@ import { MemoryPersistence } from './MemoryPersistence';
  * 
  * ### References ###
  * 
- * - <code>\*:logger:\*:\*:1.0</code>   (optional) [[ILogger]] components to pass log messages
+ * - <code>\*:logger:\*:\*:1.0</code>   (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/log.ilogger.html ILogger]] components to pass log messages
  * 
  * ### Example ###
  * 

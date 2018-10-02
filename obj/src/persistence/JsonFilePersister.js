@@ -10,7 +10,7 @@ const pip_services_commons_node_4 = require("pip-services-commons-node");
 /**
  * Persistence component that loads and saves data from/to flat file.
  *
- * It is used by FilePersistence, but can be useful on its own.
+ * It is used by [[FilePersistence]], but can be useful on its own.
  *
  * ### Configuration parameters ###
  *
@@ -18,14 +18,14 @@ const pip_services_commons_node_4 = require("pip-services-commons-node");
  *
  * ### Example ###
  *
- * let persister = new JsonFilePersister("./data/data.json");
+ *     let persister = new JsonFilePersister("./data/data.json");
  *
- * persister.save("123", ["A", "B", "C"], (err) => {
- *     ...
- *     persister.load("123", (err, items) => {
- *         console.log(items);                      // Result: ["A", "B", "C"]
+ *     persister.save("123", ["A", "B", "C"], (err) => {
+ *         ...
+ *         persister.load("123", (err, items) => {
+ *             console.log(items);                      // Result: ["A", "B", "C"]
+ *         });
  *     });
- * });
  */
 class JsonFilePersister {
     /**

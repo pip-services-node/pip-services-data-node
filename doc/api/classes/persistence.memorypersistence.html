@@ -75,13 +75,13 @@
 					<p>This is the most basic persistence component that is only
 						able to store data items of any type. Specific CRUD operations
 						over the data items must be implemented in child classes by
-					accessing this._items property and calling <a href="persistence.memorypersistence.html#save">save</a> method.</p>
+					accessing <code>this._items</code> property and calling <a href="persistence.memorypersistence.html#save">save</a> method.</p>
 					<p>The component supports loading and saving items from another data source.
 						That allows to use it as a base class for file and other types
 					of persistence components that cache all data in memory.</p>
 					<h3 id="references">References</h3>
 					<ul>
-						<li><code>*:logger:*:*:1.0</code>       (optional) [[ILogger]] components to pass log messages</li>
+						<li><code>*:logger:*:*:1.0</code>       (optional) <a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/log.ilogger.html" class="external">ILogger</a> components to pass log messages</li>
 					</ul>
 					<h3 id="example">Example</h3>
 					<pre><code><span class="hljs-keyword">class</span> MyMemoryPersistence <span class="hljs-keyword">extends</span> MemoryPersistence&lt;MyData&gt; {
@@ -187,7 +187,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L57">persistence/MemoryPersistence.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L57">persistence/MemoryPersistence.ts:57</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -227,7 +227,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 					<div class="tsd-signature tsd-kind-icon">_items<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L54">persistence/MemoryPersistence.ts:54</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L54">persistence/MemoryPersistence.ts:54</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -237,7 +237,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 					<div class="tsd-signature tsd-kind-icon">_loader<span class="tsd-signature-symbol">:</span> <a href="../interfaces/core.iloader.html" class="tsd-signature-type">ILoader</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L55">persistence/MemoryPersistence.ts:55</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L55">persistence/MemoryPersistence.ts:55</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -247,7 +247,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 					<div class="tsd-signature tsd-kind-icon">_logger<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CompositeLogger</span><span class="tsd-signature-symbol"> =&nbsp;new CompositeLogger()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L53">persistence/MemoryPersistence.ts:53</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L53">persistence/MemoryPersistence.ts:53</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -257,7 +257,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 					<div class="tsd-signature tsd-kind-icon">_opened<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L57">persistence/MemoryPersistence.ts:57</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L57">persistence/MemoryPersistence.ts:57</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -267,7 +267,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 					<div class="tsd-signature tsd-kind-icon">_saver<span class="tsd-signature-symbol">:</span> <a href="../interfaces/core.isaver.html" class="tsd-signature-type">ISaver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L56">persistence/MemoryPersistence.ts:56</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L56">persistence/MemoryPersistence.ts:56</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -284,7 +284,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L156">persistence/MemoryPersistence.ts:156</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L156">persistence/MemoryPersistence.ts:156</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -339,7 +339,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L122">persistence/MemoryPersistence.ts:122</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L122">persistence/MemoryPersistence.ts:122</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -394,7 +394,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L84">persistence/MemoryPersistence.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L84">persistence/MemoryPersistence.ts:84</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -417,7 +417,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L94">persistence/MemoryPersistence.ts:94</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L94">persistence/MemoryPersistence.ts:94</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -472,7 +472,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L136">persistence/MemoryPersistence.ts:136</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L136">persistence/MemoryPersistence.ts:136</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -527,7 +527,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L75">persistence/MemoryPersistence.ts:75</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L75">persistence/MemoryPersistence.ts:75</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

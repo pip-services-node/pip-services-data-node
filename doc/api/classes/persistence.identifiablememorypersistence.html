@@ -72,7 +72,7 @@
 					<div class="lead">
 						<p>Abstract persistence component that stores data in memory
 							and implements a number of CRUD operations over data items with unique ids.
-						The data items must implement IIdentifiable interface.</p>
+						The data items must implement <a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html" class="external">IIdentifiable interface</a>.</p>
 					</div>
 					<p>In basic scenarios child classes shall only override <a href="persistence.identifiablememorypersistence.html#getpagebyfilter">getPageByFilter</a>,
 						<a href="persistence.identifiablememorypersistence.html#getlistbyfilter">getListByFilter</a> or <a href="persistence.identifiablememorypersistence.html#deletebyfilter">deleteByFilter</a> operations with specific filter function.
@@ -92,7 +92,7 @@
 							</ul>
 							<h3 id="references">References</h3>
 							<ul>
-								<li><code>*:logger:*:*:1.0</code>     (optional) [[ILogger]] components to pass log messages</li>
+								<li><code>*:logger:*:*:1.0</code>     (optional) <a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/log.ilogger.html" class="external">ILogger</a> components to pass log messages</li>
 							</ul>
 							<h3 id="examples">Examples</h3>
 							<pre><code><span class="hljs-keyword">class</span> MyMemoryPersistence <span class="hljs-keyword">extends</span> IdentifiableMemoryPersistence&lt;MyData, <span class="hljs-built_in">string</span>&gt; {
@@ -236,7 +236,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 							<aside class="tsd-sources">
 								<p>Overrides <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L85">persistence/IdentifiableMemoryPersistence.ts:85</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/IdentifiableMemoryPersistence.ts#L85">persistence/IdentifiableMemoryPersistence.ts:85</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -277,7 +277,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#_items">_items</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L54">persistence/MemoryPersistence.ts:54</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L54">persistence/MemoryPersistence.ts:54</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -288,7 +288,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#_loader">_loader</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L55">persistence/MemoryPersistence.ts:55</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L55">persistence/MemoryPersistence.ts:55</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -299,7 +299,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#_logger">_logger</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L53">persistence/MemoryPersistence.ts:53</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L53">persistence/MemoryPersistence.ts:53</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -309,7 +309,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 					<div class="tsd-signature tsd-kind-icon">_max<wbr>Page<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;100</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L85">persistence/IdentifiableMemoryPersistence.ts:85</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/IdentifiableMemoryPersistence.ts#L85">persistence/IdentifiableMemoryPersistence.ts:85</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -320,7 +320,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#_opened">_opened</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L57">persistence/MemoryPersistence.ts:57</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L57">persistence/MemoryPersistence.ts:57</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -331,7 +331,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#_saver">_saver</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L56">persistence/MemoryPersistence.ts:56</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L56">persistence/MemoryPersistence.ts:56</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -349,7 +349,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#clear">clear</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L156">persistence/MemoryPersistence.ts:156</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L156">persistence/MemoryPersistence.ts:156</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -405,7 +405,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#close">close</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L122">persistence/MemoryPersistence.ts:122</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L122">persistence/MemoryPersistence.ts:122</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -460,7 +460,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L102">persistence/IdentifiableMemoryPersistence.ts:102</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/IdentifiableMemoryPersistence.ts#L102">persistence/IdentifiableMemoryPersistence.ts:102</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -491,7 +491,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L249">persistence/IdentifiableMemoryPersistence.ts:249</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/IdentifiableMemoryPersistence.ts#L249">persistence/IdentifiableMemoryPersistence.ts:249</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -552,7 +552,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L376">persistence/IdentifiableMemoryPersistence.ts:376</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/IdentifiableMemoryPersistence.ts#L376">persistence/IdentifiableMemoryPersistence.ts:376</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -615,7 +615,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L348">persistence/IdentifiableMemoryPersistence.ts:348</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/IdentifiableMemoryPersistence.ts#L348">persistence/IdentifiableMemoryPersistence.ts:348</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -676,7 +676,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L405">persistence/IdentifiableMemoryPersistence.ts:405</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/IdentifiableMemoryPersistence.ts#L405">persistence/IdentifiableMemoryPersistence.ts:405</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -737,7 +737,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L163">persistence/IdentifiableMemoryPersistence.ts:163</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/IdentifiableMemoryPersistence.ts#L163">persistence/IdentifiableMemoryPersistence.ts:163</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -815,7 +815,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L188">persistence/IdentifiableMemoryPersistence.ts:188</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/IdentifiableMemoryPersistence.ts#L188">persistence/IdentifiableMemoryPersistence.ts:188</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -879,7 +879,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L230">persistence/IdentifiableMemoryPersistence.ts:230</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/IdentifiableMemoryPersistence.ts#L230">persistence/IdentifiableMemoryPersistence.ts:230</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -943,7 +943,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L206">persistence/IdentifiableMemoryPersistence.ts:206</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/IdentifiableMemoryPersistence.ts#L206">persistence/IdentifiableMemoryPersistence.ts:206</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1009,7 +1009,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L119">persistence/IdentifiableMemoryPersistence.ts:119</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/IdentifiableMemoryPersistence.ts#L119">persistence/IdentifiableMemoryPersistence.ts:119</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1094,7 +1094,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#isopen">isOpen</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L84">persistence/MemoryPersistence.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L84">persistence/MemoryPersistence.ts:84</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1118,7 +1118,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#open">open</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L94">persistence/MemoryPersistence.ts:94</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L94">persistence/MemoryPersistence.ts:94</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1174,7 +1174,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#save">save</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L136">persistence/MemoryPersistence.ts:136</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L136">persistence/MemoryPersistence.ts:136</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1229,7 +1229,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L270">persistence/IdentifiableMemoryPersistence.ts:270</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/IdentifiableMemoryPersistence.ts#L270">persistence/IdentifiableMemoryPersistence.ts:270</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1292,7 +1292,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.memorypersistence.html">MemoryPersistence</a>.<a href="persistence.memorypersistence.html#setreferences">setReferences</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/MemoryPersistence.ts#L75">persistence/MemoryPersistence.ts:75</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/MemoryPersistence.ts#L75">persistence/MemoryPersistence.ts:75</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1323,7 +1323,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L294">persistence/IdentifiableMemoryPersistence.ts:294</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/IdentifiableMemoryPersistence.ts#L294">persistence/IdentifiableMemoryPersistence.ts:294</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1384,7 +1384,7 @@ persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hl
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/f82ec93/src/persistence/IdentifiableMemoryPersistence.ts#L320">persistence/IdentifiableMemoryPersistence.ts:320</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-data-node/blob/6fdb43b/src/persistence/IdentifiableMemoryPersistence.ts#L320">persistence/IdentifiableMemoryPersistence.ts:320</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

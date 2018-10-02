@@ -15,7 +15,7 @@ import { ISaver } from '../ISaver';
 /**
  * Persistence component that loads and saves data from/to flat file.
  * 
- * It is used by FilePersistence, but can be useful on its own.
+ * It is used by [[FilePersistence]], but can be useful on its own.
  * 
  * ### Configuration parameters ###
  * 

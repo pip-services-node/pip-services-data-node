@@ -12,35 +12,35 @@ const MemoryPersistence_1 = require("./MemoryPersistence");
  * accessing this._items property and calling [[save]] method.
  *
  * @see [[MemoryPersistence]]
- * @see [[JsonPersister]]
+ * @see [[JsonFilePersister]]
  *
  * ### Configuration parameters ###
  *
- * path:                path to the file where data is stored
+ * - path:                path to the file where data is stored
  *
  * ### References ###
  *
- * - *:logger:*:*:1.0   (optional) [[ILogger]] components to pass log messages
+ * - <code>\*:logger:\*:\*:1.0</code>   (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/log.ilogger.html ILogger]] components to pass log messages
  *
  * ### Example ###
  *
- * class MyJsonFilePersistence extends FilePersistence<MyData> {
- *   public constructor(path?: string) {
- *     super(new JsonPersister(path));
- *   }
+ *     class MyJsonFilePersistence extends FilePersistence<MyData> {
+ *         public constructor(path?: string) {
+ *             super(new JsonPersister(path));
+ *         }
  *
- *   public getByName(correlationId: string, name: string, callback: (err, item) => void): void {
- *     let item = _.find(this._items, (d) => d.name == name);
- *     callback(null, item);
- *   });
+ *         public getByName(correlationId: string, name: string, callback: (err, item) => void): void {
+ *             let item = _.find(this._items, (d) => d.name == name);
+ *             callback(null, item);
+ *         });
  *
- *   public set(correlatonId: string, item: MyData, callback: (err) => void): void {
- *     this._items = _.filter(this._items, (d) => d.name != name);
- *     this._items.push(item);
- *     this.save(correlationId, callback);
- *   }
+ *         public set(correlatonId: string, item: MyData, callback: (err) => void): void {
+ *             this._items = _.filter(this._items, (d) => d.name != name);
+ *             this._items.push(item);
+ *             this.save(correlationId, callback);
+ *         }
  *
- * }
+ *     }
  */
 class FilePersistence extends MemoryPersistence_1.MemoryPersistence {
     /**

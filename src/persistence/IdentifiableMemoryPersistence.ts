@@ -21,7 +21,7 @@ import { ISaver } from '../ISaver';
 /**
  * Abstract persistence component that stores data in memory
  * and implements a number of CRUD operations over data items with unique ids.
- * The data items must implement IIdentifiable interface.
+ * The data items must implement [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html IIdentifiable interface]].
  * 
  * In basic scenarios child classes shall only override [[getPageByFilter]],
  * [[getListByFilter]] or [[deleteByFilter]] operations with specific filter function.
@@ -40,7 +40,7 @@ import { ISaver } from '../ISaver';
  * 
  * ### References ###
  * 
- * - <code>\*:logger:\*:\*:1.0</code>     (optional) [[ILogger]] components to pass log messages
+ * - <code>\*:logger:\*:\*:1.0</code>     (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/log.ilogger.html ILogger]] components to pass log messages
  * 
  * ### Examples ###
  * 
